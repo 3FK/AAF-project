@@ -26,13 +26,30 @@ var UserContoller = function (){
                 reject({status: 500, errors:error, message: "eror in saving"+error});
             })
         })
-    }
+    };
 
     this.logIn = (data) => {
         console.log(data);
-
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                email: data.email
+            })
+                .then(function (user) {
+                    if (!user) {
+                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
+                        reject({status: 500, "success":false , errors:"User not found"});
+                    }
+                    if (!user.comparePassword(data.password, user.password)) {
+                        // return res.send({error: true, message: "Wrong password!"});, message: "error in saving"+error
+                        reject({status: 500, "success":false , errors:"Invalid Password "});
+                    }
+                    resolve({status:200,  "success":true , message: "You are signed in"});
+                    // return res.send({message: "You are signed in"});
+                })
+        })
     }
 }
+
 
     // exports.SignUp = function (req, res) {
     //     var user = new User(req.body);

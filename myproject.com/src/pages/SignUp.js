@@ -22,13 +22,13 @@ class SignUp extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(u) {
-        this.setState({[u.target.name]: u.target.value});
+    handleChange(e) {
+        this.setState({[e.target.name]: e.target.value});
 
     }
-    handleSubmit(u) {
+    handleSubmit(e) {
         // alert('A name was submitted: ' + this.state.value);
-        u.preventDefault();
+        e.preventDefault();
         this.register();
     }
 
@@ -62,19 +62,29 @@ class SignUp extends Component {
                 }
                 else {
                     if (res.errors.firstname) {
-                        this.setState({firstnameError:res.errors.firstname.msg})
+                        this.setState({
+                            firstnameError:res.errors.firstname.msg
+                        });
                     }
                     if (res.errors.lastname) {
-                        this.setState({lastnameError:res.errors.lastname.msg})
+                        this.setState({
+                            lastnameError:res.errors.lastname.msg
+                        });
                     }
                     if (res.errors.username) {
-                        this.setState({usernameError:res.errors.username.msg})
+                        this.setState({
+                            usernameError:res.errors.username.msg
+                        });
                     }
                     if (res.errors.email) {
-                        this.setState({emailError:res.errors.email.msg})
+                        this.setState({
+                            emailError:res.errors.email.msg
+                        });
                     }
                     if (res.errors.password) {
-                        this.setState({ passwordError:res.errors.password.msg})
+                        this.setState({
+                            passwordError:res.errors.password.msg
+                        });
                     }
                     // this.setState({})
                     // console.log(res.errors);
@@ -90,11 +100,11 @@ class SignUp extends Component {
     render() {
         return (
             <div className="container-fluid body ">
-                <form className="login" onSubmit={this.handleSubmit}>
+                <form className="login col-md-8" onSubmit={this.handleSubmit}>
                     <div className="form-group ">
                         <div >First Name :</div>
                         <input
-                            className="form-control col-md-8"
+                            className="form-control"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="first name"
@@ -104,12 +114,12 @@ class SignUp extends Component {
                             // errorText={this.state.firstnameError}
                             // floatingLabelFixed
                         />
-                        <label className="text-danger">{this.state.firstnameError}</label><br/>
+                        <label className="text-danger">{this.state.firstnameError}</label>
                     </div>
                     <div className="form-group ">
                         <div >Last Name :</div>
                         <input
-                            className="form-control col-md-8"
+                            className="form-control"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="last name"
@@ -118,12 +128,12 @@ class SignUp extends Component {
                             // errorText={this.state.lastnameError}
                             // floatingLabelFixed
                         />
-                        <label className="text-danger">{this.state.lastnameError}</label><br/>
+                        <label className="text-danger">{this.state.lastnameError}</label>
                     </div>
                     <div className="form-group ">
                         <div >User Name :</div>
                         <input
-                            className="form-control col-md-8 d-inline"
+                            className="form-control"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="user name "
@@ -132,12 +142,12 @@ class SignUp extends Component {
                             // errorText={this.state.usernameError}
                             // floatingLabelFixed
                         />
-                        <label className="text-danger d-inline">{this.state.usernameError}</label><br/>
+                        <label className="text-danger">{this.state.usernameError}</label>
                     </div>
                     <div className="form-group ">
                         <div >Email :</div>
                         <input
-                            className="form-control d-inline col-md-8"
+                            className="form-control"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="Email"
@@ -146,12 +156,12 @@ class SignUp extends Component {
                             // errorText={this.state.emailError}
                             // floatingLabelFixed
                         />
-                        <label className="text-danger d-inline">{this.state.emailError}</label><br/>
+                        <label className="text-danger">{this.state.emailError}</label>
                     </div>
                     <div className="form-group">
                         <div >Password :</div>
                         <input
-                            className="form-control col-md-8 d-inline"
+                            className="form-control"
                             onChange={this.handleChange}
                             type="password"
                             placeholder="Password"
@@ -160,7 +170,7 @@ class SignUp extends Component {
                             // errorText={this.state.passwordError}
                             // floatingLabelFixed
                         />
-                        <label className="text-danger d-inline">{this.state.passwordError}</label><br/>
+                        <label className="text-danger">{this.state.passwordError}</label>
                     </div>
                     <div className="">
                         <div className="">

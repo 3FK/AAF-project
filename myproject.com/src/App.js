@@ -7,13 +7,6 @@ import Signup from "./pages/SignUp";
 import Header from "./pages/Header";
 
 class App extends Component {
-    // state = {users: []}
-    //
-    // componentDidMount() {
-    //     fetch('/users')
-    //         .then(res => res.json())
-    //         .then(users => this.setState({ users }));
-    // }
 
   render() {
     return (
@@ -24,8 +17,8 @@ class App extends Component {
           {/*)}*/}
           <div>
               <Header/>
-              <Signup/>
-            {/*<Login/>*/}
+              {/*<Signup/>*/}
+            <Login/>
             {/*<Profile/>*/}
           </div>
       </div>

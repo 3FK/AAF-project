@@ -78,7 +78,7 @@ router.post('/signUp',signUpValidation,(req, res) => {
     }else {
         userController.SignUp(req.body)
             .then(data => {
-
+                res.status(data.status).send({success:data.success, message: data.message});
             })
             .catch((error) => {
                 console.log(error);
@@ -87,19 +87,38 @@ router.post('/signUp',signUpValidation,(req, res) => {
     }
 } );
 
-router.post('/logIn',(req, res) => {
-    userController.logIn(req.body)
-        .then(data =>{
-            res.status(data.status).send({success: data.success, data: data.message});
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(error.status).send({errors:error.errors, message: "error " + error.message});
-        })
+    const logInValidation = [
+        check("email")
+            .not()
+            .isEmpty()
+            .withMessage("Email is required")
+            .isEmail()
+            .withMessage("Email should be an email address"),
+        check("password")
+            .not()
+            .isEmpty()
+            .withMessage("Password is required")
+    ]
+
+router.post('/logIn',logInValidation,(req, res) => {
+    console.log(req.body);
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.send({ errors: errors.mapped() });
+    }else {
+        userController.logIn(req.body)
+            .then(data => {
+                res.status(data.status).send({success: data.success, data: data.message});
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+            })
+    }
 })
 
 module.exports = router;
-
 
 // router.post('/',(req,res) => {
 //     console.log("xxx "+ req.body)
