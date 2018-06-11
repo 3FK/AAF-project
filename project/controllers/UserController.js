@@ -27,6 +27,11 @@ var UserContoller = function (){
             })
         })
     }
+
+    this.logIn = (data) => {
+        console.log(data);
+
+    }
 }
 
     // exports.SignUp = function (req, res) {

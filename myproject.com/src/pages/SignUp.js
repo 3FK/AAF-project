@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import TextField from '@material-ui/core/TextField';
 import '../css/bootstrap.css';
 import '../css/login.css';
 class SignUp extends Component {
@@ -61,89 +62,105 @@ class SignUp extends Component {
                 }
                 else {
                     if (res.errors.firstname) {
-                        this.setState({firstnameError:res.errors.firstname.msg,})
+                        this.setState({firstnameError:res.errors.firstname.msg})
                     }
                     if (res.errors.lastname) {
-                        this.setState({lastnameError:res.errors.lastname.msg,})
+                        this.setState({lastnameError:res.errors.lastname.msg})
                     }
                     if (res.errors.username) {
-                        this.setState({usernameError:res.errors.username.msg,})
+                        this.setState({usernameError:res.errors.username.msg})
                     }
                     if (res.errors.email) {
-                        this.setState({emailError:res.errors.email.msg,})
+                        this.setState({emailError:res.errors.email.msg})
                     }
                     if (res.errors.password) {
-                        this.setState({ passwordError:res.errors.password.msg,})
+                        this.setState({ passwordError:res.errors.password.msg})
                     }
                     // this.setState({})
-                    console.log(res.errors);
+                    // console.log(res.errors);
                 }
             })
             .catch((error) => {
 
-                console.log(error.errors);
+                console.log(error);
             })
             // .done();
     };
 
     render() {
         return (
-            <div className="container-fluid body col-md-8">
+            <div className="container-fluid body ">
                 <form className="login" onSubmit={this.handleSubmit}>
-                    <div className="form-group row ">
+                    <div className="form-group ">
                         <div >First Name :</div>
                         <input
-                            className="form-control"
+                            className="form-control col-md-8"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="first name"
                             id="firstname"
                             name="firstname"
+                            value={this.state.firstname}
+                            // errorText={this.state.firstnameError}
+                            // floatingLabelFixed
                         />
+                        <label className="text-danger">{this.state.firstnameError}</label><br/>
                     </div>
-                    <div className="form-group row ">
+                    <div className="form-group ">
                         <div >Last Name :</div>
                         <input
-                            className="form-control"
+                            className="form-control col-md-8"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="last name"
                             id="lastname"
                             name="lastname"
+                            // errorText={this.state.lastnameError}
+                            // floatingLabelFixed
                         />
+                        <label className="text-danger">{this.state.lastnameError}</label><br/>
                     </div>
-                    <div className="form-group row ">
+                    <div className="form-group ">
                         <div >User Name :</div>
                         <input
-                            className="form-control"
+                            className="form-control col-md-8 d-inline"
                             onChange={this.handleChange}
                             type="text"
-                            placeholder="user name"
+                            placeholder="user name "
                             id="username"
                             name="username"
+                            // errorText={this.state.usernameError}
+                            // floatingLabelFixed
                         />
+                        <label className="text-danger d-inline">{this.state.usernameError}</label><br/>
                     </div>
-                    <div className="form-group row ">
+                    <div className="form-group ">
                         <div >Email :</div>
                         <input
-                            className="form-control"
+                            className="form-control d-inline col-md-8"
                             onChange={this.handleChange}
                             type="text"
                             placeholder="Email"
                             id="email"
                             name="email"
+                            // errorText={this.state.emailError}
+                            // floatingLabelFixed
                         />
+                        <label className="text-danger d-inline">{this.state.emailError}</label><br/>
                     </div>
-                    <div className="row">
+                    <div className="form-group">
                         <div >Password :</div>
                         <input
-                            className="form-control"
+                            className="form-control col-md-8 d-inline"
                             onChange={this.handleChange}
                             type="password"
                             placeholder="Password"
                             id="password"
                             name="password"
+                            // errorText={this.state.passwordError}
+                            // floatingLabelFixed
                         />
+                        <label className="text-danger d-inline">{this.state.passwordError}</label><br/>
                     </div>
                     <div className="">
                         <div className="">
@@ -161,12 +178,6 @@ class SignUp extends Component {
                 <label>{this.state.username}</label><br/>
                 <label>{this.state.email}</label><br/>
                 <label>{this.state.password}</label><br/>
-
-                <label>{this.state.firstnameError}</label><br/>
-                <label>{this.state.lastnameError}</label><br/>
-                <label>{this.state.usernameError}</label><br/>
-                <label>{this.state.emailError}</label><br/>
-                <label>{this.state.passwordError}</label><br/>
             </div>
         );
     }

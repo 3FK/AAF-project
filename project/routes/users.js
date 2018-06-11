@@ -78,7 +78,7 @@ router.post('/signUp',signUpValidation,(req, res) => {
     }else {
         userController.SignUp(req.body)
             .then(data => {
-                res.status(data.status).send({success: data.success, data: data.message});
+
             })
             .catch((error) => {
                 console.log(error);
@@ -86,6 +86,17 @@ router.post('/signUp',signUpValidation,(req, res) => {
             })
     }
 } );
+
+router.post('/logIn',(req, res) => {
+    userController.logIn(req.body)
+        .then(data =>{
+            res.status(data.status).send({success: data.success, data: data.message});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors:error.errors, message: "error " + error.message});
+        })
+})
 
 module.exports = router;
 
