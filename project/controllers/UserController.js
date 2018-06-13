@@ -23,7 +23,7 @@ var UserContoller = function (){
             user.save().then((data) => {
                 resolve({status:200,  "success":true , message: "Saved successfully"});
             }).catch((error) => {
-                reject({status: 500, errors:error, message: "eror in saving"+error});
+                reject({status: 500, errors:error, message: "error in saving"+error});
             })
         })
     };
@@ -47,8 +47,24 @@ var UserContoller = function (){
                     // return res.send({message: "You are signed in"});
                 })
         })
-    }
-}
+    };
+
+    this.showUsers = () => {
+        return new Promise((resolve, reject) => {
+            User.find()
+                .then(function (user) {
+                    if (!user) {
+                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                    resolve({status:200,  "success":true , message: "Project found", name:user});
+                    console.log(gg);
+                    // return res.send({message: "You are signed in"});
+                })
+        })
+    };
+
+};
 
 
     // exports.SignUp = function (req, res) {

@@ -5,15 +5,16 @@ var userController = require('../controllers/UserController');
 const User = require('../models/User');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/users', function(req, res, next) {
   // res.send('respond with a resource');
-    res.json([{
-        id: 1,
-        username: "abc"
-    }, {
-        id: 2,
-        username: "def"
-    }]);
+    userController.showUsers()
+        .then(data => {
+            res.status(data.status).send({success: data.success, data: data.message  , name:data.name});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+        })
 });
 
 // validation source:https://github.com/tahaygun/MERN-youtube/blob/master/server/controller.js
@@ -98,7 +99,7 @@ router.post('/signUp',signUpValidation,(req, res) => {
             .not()
             .isEmpty()
             .withMessage("Password is required")
-    ]
+    ];
 
 router.post('/logIn',logInValidation,(req, res) => {
     console.log(req.body);
@@ -116,7 +117,7 @@ router.post('/logIn',logInValidation,(req, res) => {
                 res.status(error.status).send({errors: error.errors, message: "error " + error.message});
             })
     }
-})
+});
 
 module.exports = router;
 

@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/SignUp";
 import Header from "./pages/Header";
+import Home from "./pages/Home";
+import CreateProject from "./pages/CreateProject";
 
 class App extends Component {
 
@@ -18,8 +20,10 @@ class App extends Component {
           <div>
               <Header/>
               {/*<Signup/>*/}
-            <Login/>
+            {/*<Login/>*/}
             {/*<Profile/>*/}
+            {/*<Home/>*/}
+            <CreateProject/>
           </div>
       </div>
 
