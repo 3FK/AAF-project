@@ -10,29 +10,36 @@ var ProjectContoller = function (){
                 projectDescription: data.projectDescription,
                 projectOwner: data.projectOwner,
                 Private:data.Private,
-                Contributors: data.Contributors,
+                Collaborators: data.Collaborators,
                 projectField: data.projectField
             });
             project.save().then((data) => {
                 resolve({status:200,  "success":true , message: "Saved successfully"});
             }).catch((error) => {
-                reject({status: 500, errors:error, message: "eror in saving"+error});
+                reject({status: 500, errors:error, message: "error in saving"+error});
             })
         })
     };
 
     this.showProjects = () => {
         return new Promise((resolve, reject) => {
-           Project.find()
+           Project.find({ Private: false})
                 .then(function (project) {
                     if (!project) {
-                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
                         reject({status: 500, "success":false , errors:"Project not found"});
                     }
-                    resolve({status:200,  "success":true , message: "Project found", name:project});
-                    console.log(gg);
-                    // return res.send({message: "You are signed in"});
+                    else {
+                        if (project.length>0){
+                            resolve({status:200,  "success":true , message: "Project found", name:project});
+                        }
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
                 })
+               .catch((error) => {
+                   console.log(error);
+                   reject({status: 500, "success":false , errors:"Project not found"});
+                   //res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+               })
         })
     };
 };

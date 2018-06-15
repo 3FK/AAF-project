@@ -50,7 +50,7 @@ class SignUp extends Component {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 username: this.state.username,
-                email: this.state.email,
+                email: this.state.email.toLowerCase(),
                 password: this.state.password
             })
         })

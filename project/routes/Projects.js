@@ -5,11 +5,11 @@ var ProjectController = require('../controllers/ProjectController');
 const Project = require('../models/Project');
 
 
-router.get('/', function(req, res, next) {
+router.get('/searchProject', function(req, res, next) {
     // res.send('respond with a resource');
     ProjectController.showProjects()
         .then(data => {
-            res.status(data.status).send({success: data.success, data: data.message  , name:data.name});
+            res.status(data.status).send({success: data.success, data: data.message  , name: data.name});
         })
         .catch((error) => {
             console.log(error);

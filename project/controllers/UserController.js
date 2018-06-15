@@ -16,7 +16,7 @@ var UserContoller = function (){
                 firstname: data.firstname ,
                 lastname: data.lastname,
                 username: data.username,
-                email: data.email,
+                email: data.email.toLowerCase(),
                 password: data.password
             });
             user.password = user.hashPassword(user.password);
@@ -32,7 +32,7 @@ var UserContoller = function (){
         console.log(data);
         return new Promise((resolve, reject) => {
             User.findOne({
-                email: data.email
+                email: data.email.toLowerCase()
             })
                 .then(function (user) {
                     if (!user) {
@@ -55,23 +55,29 @@ var UserContoller = function (){
                 .then(function (user) {
                     if (!user) {
                         // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
-                        reject({status: 500, "success":false , errors:"Project not found"});
+                        reject({status: 500, "success":false , errors:"User not found"});
                     }
-                    resolve({status:200,  "success":true , message: "Project found", name:user});
+                    resolve({status:200,  "success":true , message: "User found", name:user});
                     console.log(gg);
                     // return res.send({message: "You are signed in"});
+                })
+        })
+    };
+    this.getUser = (data) => {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                $or: [{username:data},{email:data.toLowerCase()}]
+            })
+                .then(function (user) {
+                    if (!user) {
+                        reject({status: 500, "success":false , errors:"user not found"});
+                    }
+                    resolve({status:200,  "success":true , message: "user found", name:user});
                 })
         })
     };
 
 };
 
-
-    // exports.SignUp = function (req, res) {
-    //     var user = new User(req.body);
-    //     // user.password = user.hashPassword(user.password);
-    //     user.save().then(user => {
-    //         res.send('user added');
-    //     })
-    // };
 module.exports =new UserContoller();

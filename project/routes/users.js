@@ -17,6 +17,20 @@ router.get('/users', function(req, res, next) {
         })
 });
 
+router.get('/getUser', function(req, res, next) {
+    // res.send('respond with a resource');
+    var user = req.param('u');
+    console.log(user);
+    userController.getUser(user)
+        .then(data => {
+            res.status(data.status).send({success: data.success, data: data.message  , name:data.name});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+        })
+});
+
 // validation source:https://github.com/tahaygun/MERN-youtube/blob/master/server/controller.js
 
 const signUpValidation = [

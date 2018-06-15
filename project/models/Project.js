@@ -20,7 +20,7 @@ var ProjectSchema = new Schema({
         type:   Boolean,
         required:   true
     },
-    Contributors:{
+    Collaborators:{
         type: [],
     },
     projectField:{

@@ -7,6 +7,8 @@ import Signup from "./pages/SignUp";
 import Header from "./pages/Header";
 import Home from "./pages/Home";
 import CreateProject from "./pages/CreateProject";
+import PublicProjects from "./pages/PublicProjects";
+import DownshiftMultiple from "./pages/DownshiftMultiple"
 
 class App extends Component {
 
@@ -23,7 +25,9 @@ class App extends Component {
             {/*<Login/>*/}
             {/*<Profile/>*/}
             {/*<Home/>*/}
-            <CreateProject/>
+            {/*<CreateProject/>*/}
+              <PublicProjects/>
+            {/*<DownshiftMultiple/>*/}
           </div>
       </div>
 
