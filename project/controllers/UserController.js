@@ -43,7 +43,7 @@ var UserContoller = function (){
                         // return res.send({error: true, message: "Wrong password!"});, message: "error in saving"+error
                         reject({status: 500, "success":false , errors:"Invalid Password "});
                     }
-                    resolve({status:200,  "success":true , message: "You are signed in"});
+                    resolve({status:200,  "success":true , message: "You are signed in", data:user});
                     // return res.send({message: "You are signed in"});
                 })
         })

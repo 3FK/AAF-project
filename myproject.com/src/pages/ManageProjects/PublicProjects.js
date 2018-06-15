@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import '../css/bootstrap.css';
-import '../css/login.css';
 
 class PublicProjects extends Component {
     constructor(props) {
@@ -52,9 +50,9 @@ class PublicProjects extends Component {
                                 <div>
                                     {
                                         item.Collaborators.map((gg) =>
-                                        <div>
-                                            {gg.username}
-                                        </div>
+                                            <div>
+                                                {gg.username}
+                                            </div>
                                         )
                                     }
                                 </div>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import '../css/bootstrap.css';
-import '../css/login.css';
 class CreateProject extends Component {
 
     constructor(props) {

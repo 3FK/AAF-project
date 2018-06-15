@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var { check, validationResult } = require("express-validator/check");
-var userController = require('../controllers/UserController');
+const express = require('express');
+const router = express.Router();
+const { check, validationResult } = require("express-validator/check");
+const userController = require('../controllers/UserController');
+const bodyparser = require("body-parser");
 const User = require('../models/User');
 
 /* GET users listing. */
@@ -19,16 +20,21 @@ router.get('/users', function(req, res, next) {
 
 router.get('/getUser', function(req, res, next) {
     // res.send('respond with a resource');
-    var user = req.param('u');
-    console.log(user);
-    userController.getUser(user)
-        .then(data => {
-            res.status(data.status).send({success: data.success, data: data.message  , name:data.name});
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
-        })
+    if (!isLoggedIn){
+        res.status(error.status).send({errors: error.errors, message: "log in " + error.message});
+    }
+    else {
+        var user = req.param('u');
+        console.log(user);
+        userController.getUser(user)
+            .then(data => {
+                res.status(data.status).send({success: data.success, data: data.message, name: data.name});
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+            })
+    }
 });
 
 // validation source:https://github.com/tahaygun/MERN-youtube/blob/master/server/controller.js
@@ -114,6 +120,21 @@ router.post('/signUp',signUpValidation,(req, res) => {
             .isEmpty()
             .withMessage("Password is required")
     ];
+// this.isLoggedIn = (req, res, next) => {
+//     if (req.session.isLoggedIn) {
+//         res.send(true);
+//     } else {
+//         res.send(false);
+//     }
+// }
+function isLoggedIn(req, res) {
+    if (req.session.isLoggedIn) {
+        res.send(true);
+    } else {
+        res.send(false);
+    }
+}
+router.get('/log',isLoggedIn);
 
 router.post('/logIn',logInValidation,(req, res) => {
     console.log(req.body);
@@ -124,13 +145,24 @@ router.post('/logIn',logInValidation,(req, res) => {
     }else {
         userController.logIn(req.body)
             .then(data => {
-                res.status(data.status).send({success: data.success, data: data.message});
+                console.log(data.data);
+                console.log(data.data._id);
+                // req.session.data = data.data;
+                // req.session.isLoggedIn = true;
+                res.status(data.status).send({success: data.success, message: data.message, data:data.data});
             })
             .catch((error) => {
                 console.log(error);
                 res.status(error.status).send({errors: error.errors, message: "error " + error.message});
             })
     }
+});
+router.get('/logout', (req,res) => {
+    //req.session.destroy();
+    req.session.destroy(function(err) {
+        // cannot access session here
+    })
+    res.send({ message: "Logged out!" });
 });
 
 module.exports = router;

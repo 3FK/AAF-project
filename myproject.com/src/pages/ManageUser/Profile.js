@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import '../css/bootstrap.css';
-import '../css/profile.css';
-import pic from '../assets/reviwers/reviwer2.jpg';
+import pic from '../../assets/reviwers/reviwer2.jpg';
 class Profile extends Component {
 
     render() {
