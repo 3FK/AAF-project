@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import jwt from 'jsonwebtoken';
 
 class Login extends Component {
 
@@ -45,6 +46,10 @@ class Login extends Component {
             .then(res => {
                 if (res.success === true) {
                     alert("User Successfully login ");
+                    const token = res.token;
+                    localStorage.setItem('jwtToken', token);
+                    sessionStorage.setItem('isLogin',true);
+                    console.log(jwt.decode(token));
                 }
                 else {
                     if (res.errors.email) {

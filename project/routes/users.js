@@ -7,7 +7,6 @@ const User = require('../models/User');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
-  // res.send('respond with a resource');
     userController.showUsers()
         .then(data => {
             res.status(data.status).send({success: data.success, data: data.message  , name:data.name});
@@ -18,12 +17,26 @@ router.get('/users', function(req, res, next) {
         })
 });
 
+router.get('/findUser', function(req, res, next) {
+    var user = req.param('u');
+    console.log(user);
+    userController.findUser(user)
+        .then(data => {
+            res.status(data.status).send({success: data.success, data: data.message, name: data.name});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+        })
+    //}
+});
+
 router.get('/getUser', function(req, res, next) {
     // res.send('respond with a resource');
-    if (!isLoggedIn){
-        res.status(error.status).send({errors: error.errors, message: "log in " + error.message});
-    }
-    else {
+    // if (!isLoggedIn){
+    //     res.status(error.status).send({errors: error.errors, message: "log in " + error.message});
+    // }
+    // else {
         var user = req.param('u');
         console.log(user);
         userController.getUser(user)
@@ -34,7 +47,7 @@ router.get('/getUser', function(req, res, next) {
                 console.log(error);
                 res.status(error.status).send({errors: error.errors, message: "error " + error.message});
             })
-    }
+    //}
 });
 
 // validation source:https://github.com/tahaygun/MERN-youtube/blob/master/server/controller.js
@@ -106,7 +119,7 @@ router.post('/signUp',signUpValidation,(req, res) => {
                 res.status(error.status).send({errors:error.errors, message: "error " + error.message});
             })
     }
-} );
+});
 
     const logInValidation = [
         check("email")
@@ -120,13 +133,7 @@ router.post('/signUp',signUpValidation,(req, res) => {
             .isEmpty()
             .withMessage("Password is required")
     ];
-// this.isLoggedIn = (req, res, next) => {
-//     if (req.session.isLoggedIn) {
-//         res.send(true);
-//     } else {
-//         res.send(false);
-//     }
-// }
+
 function isLoggedIn(req, res) {
     if (req.session.isLoggedIn) {
         res.send(true);
@@ -149,7 +156,7 @@ router.post('/logIn',logInValidation,(req, res) => {
                 console.log(data.data._id);
                 // req.session.data = data.data;
                 // req.session.isLoggedIn = true;
-                res.status(data.status).send({success: data.success, message: data.message, data:data.data});
+                res.status(data.status).send({success: data.success, message: data.message, data:data.data,token: data.token});
             })
             .catch((error) => {
                 console.log(error);
@@ -157,12 +164,25 @@ router.post('/logIn',logInValidation,(req, res) => {
             })
     }
 });
-router.get('/logout', (req,res) => {
-    //req.session.destroy();
-    req.session.destroy(function(err) {
-        // cannot access session here
+
+router.put('/editUser', (req, res) => {
+    console.log(req.param('id'));
+    const id = req.param('id');
+    userController.editUser(id, req.body).then(data => {
+        res.status(data.status).send({message: data.message});
+    }).catch(err => {
+        res.status(err.status).send({message: err.message});
     })
-    res.send({ message: "Logged out!" });
+});
+
+router.delete('/deleteUser', (req, res) => {
+    console.log(req.param('id'));
+    const id = req.param('id');
+    userController.deleteUser(id).then(data => {
+        res.status(data.status).send({message: data.message});
+    }).catch(err => {
+        res.status(err.status).send({message: err.message});
+    })
 });
 
 module.exports = router;

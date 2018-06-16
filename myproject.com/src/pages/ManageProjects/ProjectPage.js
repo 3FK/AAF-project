@@ -4,14 +4,16 @@ class ProjectPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Projects:[],
+            // id:this.props.params.id,
+            Project:[],
         };
-    }
+    };
     componentDidMount(){
-        this.getPublicProjects();
+        this.getProjects();
+        console.log(this.props.match.params.id);
     }
-    getPublicProjects = () => {
-        fetch("http://192.168.96.1:3001/project/searchProject", {
+    getProjects = () => {
+        fetch("http://192.168.96.1:3001/project/Project?id="+this.props.match.params.id, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -23,19 +25,19 @@ class ProjectPage extends Component {
                 if (res.success === true) {
                     alert('project found');
                     for(let item of res.name) {
-                        this.state.Projects.push(item);
+                        this.state.Project.push(item);
                     }
                     this.setState(this.state);
-                    console.log(this.state.Projects);
+                    console.log(this.state.Project);
                 }
                 else {
                     alert('no projects to show');
                 }
             });
     };
-    getProjects= () =>{
+    showProject= () =>{
         let ProjectsArray=[];
-        for(let item of this.state.Projects){
+        for(let item of this.state.Project){
             ProjectsArray.push(
                 <div key={item._id}>
                     <div className="d-inline">
@@ -44,65 +46,22 @@ class ProjectPage extends Component {
                     <div>
                         {item.projectDescription}
                     </div>
-                    <div>
-                        {
-                            (typeof (item.Collaborators)==='object')?
-                                <div>
-                                    {
-                                        item.Collaborators.map((gg) =>
-                                            <div key={gg.username}>
-                                                {gg.username}
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                :
-                                null
-                        }
-                    </div>
-                    <div>
-                        {
-                            (typeof (item.projectField)==='object')?
-                                <div>
-                                    {
-                                        item.projectField.map((gg) =>
-                                            <div key={gg}>
-                                                {gg}
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                :
-                                null
-                        }
-                    </div>
-                    <div className="d-inline">
-                        <button
-                            type="button"
-                            className="btn "
-                            onClick={()=>{this.showProject(item._id)}}
-                            name="remove"
-                        >
-                            View Project
-                        </button>
-                    </div>
                 </div>);
             console.log(ProjectsArray)
         }
 
         return ProjectsArray;
     };
-    showProject = () => {
-        // return (window.location = "/projectPage")
-    };
-
-    render(){
+    render() {
         return (
-            <div className="body">
-                {this.getProjects()}
+            <div className="container-fluid body col-md-12">
+                <div>
+                    <div>
+                        {this.showProject()}
+                        {/*{this.state.Project.projectName}*/}
+                    </div>
+                </div>
             </div>
-        )
-    }
+        )}
 }
-
 export default ProjectPage;

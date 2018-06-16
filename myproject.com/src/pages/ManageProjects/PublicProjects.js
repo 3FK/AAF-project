@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 class PublicProjects extends Component {
     constructor(props) {
@@ -52,6 +53,14 @@ class PublicProjects extends Component {
                                         item.Collaborators.map((gg) =>
                                             <div>
                                                 {gg.username}
+                                                <Link
+                                                    type="button"
+                                                    className="btn "
+                                                    to={"/profile/"+(gg._id)}
+                                                    name="remove"
+                                                >
+                                                    View User
+                                                </Link>
                                             </div>
                                         )
                                     }
@@ -77,14 +86,14 @@ class PublicProjects extends Component {
                         }
                     </div>
                     <div className="d-inline">
-                        <button
+                        <Link
                             type="button"
                             className="btn "
-                            //onClick={()=>{this.removeCollaborators(item)}}
+                            to={"/projectPage/"+(item._id)}
                             name="remove"
                         >
                             View Project
-                        </button>
+                        </Link>
                     </div>
                 </div>);
             console.log(ProjectsArray)
@@ -92,6 +101,7 @@ class PublicProjects extends Component {
 
         return ProjectsArray;
     };
+
 
     render(){
         return (

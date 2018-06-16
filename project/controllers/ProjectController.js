@@ -42,5 +42,45 @@ var ProjectContoller = function (){
                })
         })
     };
+    this.individualProjects = (Pid) => {
+        return new Promise((resolve, reject) => {
+            Project.find({ _id: Pid})
+                .then(function (project) {
+                    if (!project) {
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                    else {
+                        if (project.length>0){
+                            resolve({status:200,  "success":true , message: "Project found", name:project});
+                        }
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject({status: 500, "success":false , errors:"Project not found"});
+                })
+        })
+    };
+
+    this.editProject = (id, data) => {
+        return new Promise((resolve, reject) => {
+            Project.update({_id: id}, data).then((data) => {
+                resolve({status: 200, message: "Project Successfully updated", data:data});
+            }).catch(err => {
+                reject({status: 500, message: "Error:- " + err});
+            })
+        })
+    };
+
+    this.deleteProject = (id) => {
+        return new Promise((resolve, reject) => {
+            Project.remove({_id:id}).then(() => {
+                resolve({status: 200, message: "Project removed"});
+            }).catch(err => {
+                reject({status: 500, message:"Error:- " + err});
+            })
+        })
+    };
 };
 module.exports =new ProjectContoller();

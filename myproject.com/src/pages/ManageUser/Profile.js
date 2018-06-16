@@ -1,13 +1,56 @@
 import React, { Component } from 'react';
 import pic from '../../assets/reviwers/reviwer2.jpg';
+import {Link} from 'react-router-dom';
 class Profile extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            User:[],
+        };
+    };
+    componentDidMount(){
+        console.log(this.props.match.params.id);
+        this.getUser(this.props.match.params.id);
+    }
+    getUser = (id) => {
+        fetch("http://localhost:3001/user/findUser?u="+id, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(res => {
+                if (res.success === true) {
+                    alert('user found');
+                    // for(let item of res.name) {
+                        this.state.User.push(res.name);
+                    //}
+                    this.setState(this.state);
+                    console.log(this.state.User);
+                }
+                else {
+                    alert('no projects to show');
+                }
+            });
+    };
     render() {
         return (
             <div className="container-fluid col-md-12 ">
                 <div className="row">
                     <div>
                         <img className="rounded image" src={pic} />
+                    </div>
+                    <div>
+                        <Link
+                            type="button"
+                            className="btn "
+                            to={"/EditProfile/"+(this.props.match.params.id)}
+                            name="remove"
+                        >
+                            View Project
+                        </Link>
                     </div>
                     <div>
                         <div className="a font-weight-bold font-italic name">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './css/SignUp.css';
 // import TextField from '@material-ui/core/TextField';
 class SignUp extends Component {
 
