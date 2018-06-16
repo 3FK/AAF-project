@@ -47,9 +47,13 @@ class Login extends Component {
                 if (res.success === true) {
                     alert("User Successfully login ");
                     const token = res.token;
+                    const tok = jwt.decode(token);
                     localStorage.setItem('jwtToken', token);
-                    sessionStorage.setItem('isLogin',true);
+                    localStorage.setItem('id', tok.id);
+                   // sessionStorage.setItem('isLogin',true);
                     console.log(jwt.decode(token));
+                    console.log(tok);
+                    return (window.location="/");
                 }
                 else {
                     if (res.errors.email) {

@@ -4,13 +4,85 @@ class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            User:[],
+            id:this.props.match.params.id,
             firstname:'',
             lastname:'',
             username:'',
             email:'',
-            password:''
+            password:'',
+            firstnameError:'',
+            lastnameError:'',
+            usernameError:'',
+            emailError:'',
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    };
+    handleChange(e) {
+        this.setState({[e.target.name]: e.target.value});
+    }
+    handleSubmit(e) {
+        // alert('A name was submitted: ' + this.state.value);
+        e.preventDefault();
+        this.UpdateUser();
+    }
+    UpdateUser = () => {
+        this.setState({
+            firstnameError:'',
+            lastnameError:'',
+            usernameError:'',
+            emailError:'',
+            passwordError:''
+        });
+        fetch("http://192.168.96.1:3001/user/editUser?id="+this.state.id, {
+            method: "PUT",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                username: this.state.username,
+                email: this.state.email.toLowerCase(),
+            })
+        })
+            .then(Response => Response.json())
+            .then(res => {
+                // alert(res.message);
+                if (res.success === true) {
+                    alert("User Successfully Updated ");
+                    return (window.location="/profile/"+this.state.id);
+                }
+                else {
+                    alert("error")
+                    if (res.errors.firstname) {
+                        this.setState({
+                            firstnameError:res.errors.firstname.msg
+                        });
+                    }
+                    if (res.errors.lastname) {
+                        this.setState({
+                            lastnameError:res.errors.lastname.msg
+                        });
+                    }
+                    if (res.errors.username) {
+                        this.setState({
+                            usernameError:res.errors.username.msg
+                        });
+                    }
+                    if (res.errors.email) {
+                        this.setState({
+                            emailError:res.errors.email.msg
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+                alert(error);
+                console.log(error);
+            })
+        // .done();
     };
     componentDidMount(){
         console.log(this.props.match.params.id);
@@ -35,7 +107,6 @@ class EditProfile extends Component {
                             lastname:res.name.lastname,
                             username:res.name.username,
                             email:res.name.email,
-                            password:res.name.password
                         });
                     //}
                     // this.setState(this.state);
@@ -49,13 +120,76 @@ class EditProfile extends Component {
     render() {
         return (
             <div className="container-fluid body col-md-12">
+                <form className="login col-md-8" onSubmit={this.handleSubmit}>
+                    <div className="form-group ">
+                        <div >First Name :</div>
+                        <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="first name"
+                            id="firstname"
+                            name="firstname"
+                            value={this.state.firstname}
+                            // errorText={this.state.firstnameError}
+                            // floatingLabelFixed
+                        />
+                        <label className="text-danger">{this.state.firstnameError}</label>
+                    </div>
+                    <div className="form-group ">
+                        <div >Last Name :</div>
+                        <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="last name"
+                            id="lastname"
+                            name="lastname"
+                            value={this.state.lastname}
+                            // errorText={this.state.lastnameError}
+                            // floatingLabelFixed
+                        />
+                        <label className="text-danger">{this.state.lastnameError}</label>
+                    </div>
+                    <div className="form-group ">
+                        <div >User Name :</div>
+                        <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="user name "
+                            id="username"
+                            name="username"
+                            value={this.state.username}
+                            // errorText={this.state.usernameError}
+                            // floatingLabelFixed
+                        />
+                        <label className="text-danger">{this.state.usernameError}</label>
+                    </div>
+                    <div className="form-group ">
+                        <div >Email :</div>
+                        <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="Email"
+                            id="email"
+                            name="email"
+                            value={this.state.email}
+                            // errorText={this.state.emailError}
+                            // floatingLabelFixed
+                        />
+                        <label className="text-danger">{this.state.emailError}</label>
+                    </div>
+                    <button type="submit" className="btn " name="login-button">Save Changes</button>
+                </form>
                 <div>
                     <div className="col-md-8">
-                        <label>{this.state.firstname}</label>
-                        <label>{this.state.lastname}</label>
-                        <label>{this.state.username}</label>
-                        <label>{this.state.email}</label>
-                        <label>{this.state.password}</label>
+                        <label>{this.state.firstname}</label><br/>
+                        <label>{this.state.lastname}</label><br/>
+                        <label>{this.state.username}</label><br/>
+                        <label>{this.state.email}</label><br/>
+                        <label>{this.state.password}</label><br/>
                     </div>
                 </div>
             </div>

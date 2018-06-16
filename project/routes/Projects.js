@@ -1,10 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var ProjectController = require('../controllers/ProjectController');
+const jwt = require('jsonwebtoken');
 const Project = require('../models/Project');
 
+const jwtSecret = 'keyforjwt';
 
 router.get('/searchProject', function(req, res, next) {
+   // console.log(req.headers);
+    //var token = req.headers['x-access-token'];
+  //  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+  //   console.log(token);
+    // jwt.verify(token,jwtSecret).then((error,decoded) => {
+    //     if(error){
+    //         console.log("error " +error);
+    //     }
+    //     console.log(decoded);
+    // });
+
     ProjectController.showProjects()
         .then(data => {
             res.status(data.status).send({success: data.success, data: data.message  , name: data.name});

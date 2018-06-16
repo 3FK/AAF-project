@@ -75,6 +75,7 @@ var UserContoller = function (){
                     if (!user) {
                         reject({status: 500, "success":false , errors:"user not found"});
                     }
+
                     resolve({status:200,  "success":true , message: "user found", name:user});
                 })
         })
@@ -121,9 +122,7 @@ var UserContoller = function (){
                 lastname: data.lastname,
                 username: data.username,
                 email: data.email.toLowerCase(),
-                password: data.password
             });
-            user.password = user.hashPassword(user.password);
             User.update({_id: id}, user).then((data) => {
                 resolve({status: 200, message: "User Successfully updated"});
             }).catch(err => {

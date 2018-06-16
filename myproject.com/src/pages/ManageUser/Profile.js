@@ -49,7 +49,7 @@ class Profile extends Component {
                             to={"/EditProfile/"+(this.props.match.params.id)}
                             name="remove"
                         >
-                            View Project
+                            Edit Profile
                         </Link>
                     </div>
                     <div>

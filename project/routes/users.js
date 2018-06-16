@@ -165,14 +165,49 @@ router.post('/logIn',logInValidation,(req, res) => {
     }
 });
 
-router.put('/editUser', (req, res) => {
+const userEditValidation = [
+    check("firstname")
+        .not()
+        .isEmpty()
+        .withMessage("First name is required")
+        .isLength({ min: 2 })
+        .withMessage("Name should be at least 2 letters")
+        .matches(/^([A-z]|\s)+$/)
+        .withMessage("Name cannot have numbers"),
+    check("lastname")
+        .not()
+        .isEmpty()
+        .withMessage("Last name is required")
+        .isLength({ min: 2 })
+        .withMessage("Last name should be at least 2 letters"),
+    check("username")
+        .not()
+        .isEmpty()
+        .withMessage("Username is required")
+        .isLength({ min: 2 })
+        .withMessage("Username should be at least 2 letters"),
+    check("email")
+        .not()
+        .isEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Email should be an email address"),
+];
+
+router.put('/editUser', userEditValidation, (req, res) => {
     console.log(req.param('id'));
     const id = req.param('id');
-    userController.editUser(id, req.body).then(data => {
-        res.status(data.status).send({message: data.message});
-    }).catch(err => {
-        res.status(err.status).send({message: err.message});
-    })
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.send({ errors: errors.mapped() });
+    }else {
+        userController.editUser(id, req.body).then(data => {
+            res.status(data.status).send({success: true,message: data.message});
+        }).catch(err => {
+            res.status(err.status).send({message: err.message});
+        })
+    }
 });
 
 router.delete('/deleteUser', (req, res) => {

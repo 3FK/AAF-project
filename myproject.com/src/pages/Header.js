@@ -38,7 +38,10 @@ class Header extends Component {
                             <NavLink className="nav-link text-secondary" to='/publicProjects'>Public Projects</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-secondary" to='/signup'>My Projects</NavLink>
+                            <NavLink className="nav-link text-secondary" to='/createProject'>My Projects</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-secondary" to='/signup'>Sign up</NavLink>
                         </li>
                         <li>
                             <NavLink className="nav-link text-secondary" to='/projectPage'>Project Page</NavLink>

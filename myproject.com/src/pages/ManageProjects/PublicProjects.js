@@ -16,7 +16,8 @@ class PublicProjects extends Component {
             method: "GET",
             headers: {
                 Accept: "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                // 'x-access-token':localStorage.getItem('jwtToken'),
             }
         })
             .then(response => response.json())

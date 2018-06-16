@@ -38,7 +38,7 @@ class SignUp extends Component {
             usernameError:'',
             emailError:'',
             passwordError:''
-        })
+        });
         fetch("http://192.168.96.1:3001/user/signUp", {
             method: "POST",
             headers: {
