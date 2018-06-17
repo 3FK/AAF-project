@@ -15,7 +15,9 @@ var UserContoller = function (){
                 lastname: data.lastname,
                 username: data.username,
                 email: data.email.toLowerCase(),
-                password: data.password
+                password: data.password,
+                country:data.country,
+                description:data.description
             });
             user.password = user.hashPassword(user.password);
             user.save().then((data) => {
@@ -122,6 +124,8 @@ var UserContoller = function (){
                 lastname: data.lastname,
                 username: data.username,
                 email: data.email.toLowerCase(),
+                country:data.country,
+                description:data.description
             });
             User.update({_id: id}, user).then((data) => {
                 resolve({status: 200, message: "User Successfully updated"});

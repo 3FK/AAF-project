@@ -100,7 +100,11 @@ const signUpValidation = [
                 throw new Error("This email already have a Account");
             }
         });
-    })
+    }),
+    check("country")
+        .not()
+        .isEmpty()
+        .withMessage("Country is required"),
 ];
 
 router.post('/signUp',signUpValidation,(req, res) => {

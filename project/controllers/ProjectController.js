@@ -14,7 +14,9 @@ var ProjectContoller = function (){
                 projectField: data.projectField
             });
             project.save().then((data) => {
-                resolve({status:200,  "success":true , message: "Saved successfully"});
+                console.log(data);
+                console.log(data._id);
+                resolve({status:200,  "success":true , message: "Saved successfully", data:data._id});
             }).catch((error) => {
                 reject({status: 500, errors:error, message: "error in saving"+error});
             })
@@ -82,5 +84,25 @@ var ProjectContoller = function (){
             })
         })
     };
+    this.getUsersProjects = (Uid) => {
+        return new Promise((resolve, reject) => {
+            Project.find({ projectOwner: Uid})
+                .then(function (project) {
+                    if (!project) {
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                    else {
+                        if (project.length>0){
+                            resolve({status:200,  "success":true , message: "Project found", name:project});
+                        }
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject({status: 500, "success":false , errors:"Project not found"});
+                })
+        })
+    }
 };
 module.exports =new ProjectContoller();

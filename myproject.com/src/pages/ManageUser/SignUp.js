@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import './css/SignUp.css';
 // import TextField from '@material-ui/core/TextField';
 class SignUp extends Component {
@@ -15,7 +16,10 @@ class SignUp extends Component {
             email: '',
             emailError:'',
             password: '',
-            passwordError:''
+            passwordError:'',
+            country:'',
+            countryError:'',
+            description:''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,7 +41,8 @@ class SignUp extends Component {
             lastnameError:'',
             usernameError:'',
             emailError:'',
-            passwordError:''
+            passwordError:'',
+            countryError:'',
         });
         fetch("http://192.168.96.1:3001/user/signUp", {
             method: "POST",
@@ -50,7 +55,9 @@ class SignUp extends Component {
                 lastname: this.state.lastname,
                 username: this.state.username,
                 email: this.state.email.toLowerCase(),
-                password: this.state.password
+                password: this.state.password,
+                country:this.state.country,
+                description:this.state.description
             })
         })
             .then(Response => Response.json())
@@ -85,6 +92,11 @@ class SignUp extends Component {
                             passwordError:res.errors.password.msg
                         });
                     }
+                    if (res.errors.country) {
+                        this.setState({
+                            countryError:res.errors.country.msg
+                        });
+                    }
                     // this.setState({})
                     // console.log(res.errors);
                 }
@@ -99,9 +111,10 @@ class SignUp extends Component {
     render() {
         return (
             <div className="container-fluid body ">
-                <form className="login col-md-8" onSubmit={this.handleSubmit}>
+                <form className="signUp-form col-md-8" onSubmit={this.handleSubmit}>
+                    <label className="text-primary signUp-title">Register Your Self</label>
                     <div className="form-group ">
-                        <div >First Name :</div>
+                        <div className="signUp-text">First Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -116,7 +129,7 @@ class SignUp extends Component {
                         <label className="text-danger">{this.state.firstnameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >Last Name :</div>
+                        <div className="signUp-text">Last Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -130,7 +143,7 @@ class SignUp extends Component {
                         <label className="text-danger">{this.state.lastnameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >User Name :</div>
+                        <div className="signUp-text">User Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -144,7 +157,7 @@ class SignUp extends Component {
                         <label className="text-danger">{this.state.usernameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >Email :</div>
+                        <div className="signUp-text">Email :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -158,7 +171,7 @@ class SignUp extends Component {
                         <label className="text-danger">{this.state.emailError}</label>
                     </div>
                     <div className="form-group">
-                        <div >Password :</div>
+                        <div className="signUp-text">Password :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -171,16 +184,40 @@ class SignUp extends Component {
                         />
                         <label className="text-danger">{this.state.passwordError}</label>
                     </div>
+                    <div className="form-group">
+                        <div className="signUp-text">Country :</div>
+                        <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            type="text"
+                            placeholder="country"
+                            id="country"
+                            name="country"
+                            // errorText={this.state.passwordError}
+                            // floatingLabelFixed
+                        />
+                        <label className="text-danger">{this.state.countryError}</label>
+                    </div>
+                    <div className="form-group">
+                        <div className="signUp-text">Description :</div>
+                        <textarea
+                            className="form-control"
+                            onChange={this.handleChange}
+                            rows="4"
+                            type="text"
+                            placeholder="description"
+                            id="description"
+                            name="description"
+                            // errorText={this.state.passwordError}
+                            // floatingLabelFixed
+                        />
+                    </div>
                     <div className="">
                         <div className="">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                            <label className="form-check-label">Allow Notification</label>
-                        </div>
-                        <div className="">
-                            <p>already have a account. <a href="/password-forgot" className="" aria-busy="false">sign in</a></p>
+                            <p  className="signUp-text">already have a account. <Link to='/login' className="" aria-busy="false">sign in</Link></p>
                         </div>
                     </div>
-                    <button type="submit" className="btn " name="login-button">Sign Up</button>
+                    <button type="submit" className="btn btn-success" name="login-button">Sign Up</button>
                 </form>
                 <label>{this.state.firstname}</label><br/>
                 <label>{this.state.lastname}</label><br/>

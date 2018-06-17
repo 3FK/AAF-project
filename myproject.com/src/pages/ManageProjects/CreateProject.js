@@ -8,7 +8,7 @@ class CreateProject extends Component {
             projectNameError:'',
             projectDescription: '',
             projectDescriptionError:'',
-            projectOwner:'oshada',
+            projectOwner:'',
             Private:false,
             Collaborators:[],
             searchUser:'',
@@ -29,6 +29,18 @@ class CreateProject extends Component {
         e.preventDefault();
         this.createProject();
     }
+    componentDidMount(){
+        if (!localStorage.getItem('id')) {
+            // alert("please login to create project");
+            return (window.location="/login");
+        }
+        else {
+            this.setState({
+                projectOwner:localStorage.getItem('id')
+            })
+        }
+    }
+
     createProject = () => {
         this.setState({
             projectNameError:'',
@@ -53,6 +65,7 @@ class CreateProject extends Component {
             .then(res => {
                 if (res.success === true) {
                     alert("Project created");
+                    return (window.location="/projectPage/"+res.data);
                 }
                 else {
                     if (res.errors.projectName) {

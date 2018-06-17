@@ -1,3 +1,19 @@
 body{
     margin-top: 50px;
+    background-color: #1e272e;
+}
+.nav-bar-colour{
+    background-color: #1e272e;
+}
+.nav-bar-btn-colour{
+    color: #0fbcf9;
+}
+.nav-bar-main-btn-colour{
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
 }

@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import pic from '../../assets/reviwers/reviwer2.jpg';
+import './css/profile.css';
 import {Link} from 'react-router-dom';
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            User:[],
+            Projects:[],
+            id:'',
+            firstname: '',
+            lastname: '',
+            username: '',
+            email: '',
         };
     };
     componentDidMount(){
-        console.log(this.props.match.params.id);
-        this.getUser(this.props.match.params.id);
+        // console.log(this.props.match.params.id);
+        const userid = localStorage.getItem('id');
+        this.getUser(userid);
+        this.getUsersProjects(userid);
     }
     getUser = (id) => {
         fetch("http://localhost:3001/user/findUser?u="+id, {
@@ -24,11 +32,39 @@ class Profile extends Component {
             .then(res => {
                 if (res.success === true) {
                     alert('user found');
-                    // for(let item of res.name) {
-                        this.state.User.push(res.name);
-                    //}
+                    console.log(res.name._id);
+                    this.setState({
+                        id: res.name._id,
+                        firstname: res.name.firstname,
+                        lastname: res.name.lastname,
+                        username: res.name.username,
+                        email: res.name.email,
+                    });
+
+                }
+                else {
+                    alert('no projects to show');
+                }
+            });
+    };
+    getUsersProjects = (id) => {
+        fetch("http://192.168.96.1:3001/project/ProjectByUser?id="+id, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                // 'x-access-token':localStorage.getItem('jwtToken'),
+            }
+        })
+            .then(response => response.json())
+            .then(res => {
+                if (res.success === true) {
+                    alert('project found');
+                    for(let item of res.name) {
+                        this.state.Projects.push(item);
+                    }
                     this.setState(this.state);
-                    console.log(this.state.User);
+                    console.log(this.state.Projects);
                 }
                 else {
                     alert('no projects to show');
@@ -53,8 +89,8 @@ class Profile extends Component {
                         </Link>
                     </div>
                     <div>
-                        <div className="a font-weight-bold font-italic name">
-                            Hi, I'm Muvindu !
+                        <div className="a font-weight-bold font-italic name profile-title">
+                            Hi, I'm{this.state.username} !
                         </div>
                         <div className="a font-weight-bold font-italic address">
                             Anuradhapura, SriLanka.

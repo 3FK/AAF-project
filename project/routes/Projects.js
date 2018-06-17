@@ -40,11 +40,23 @@ router.get('/Project', function(req, res, next) {
         })
 });
 
+router.get('/ProjectByUser', function(req, res, next) {
+    const Uid = req.param('id');
+    ProjectController.getUsersProjects(Uid)
+        .then(data => {
+            res.status(data.status).send({success: data.success, data: data.message  , name: data.name});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+        })
+});
+
 router.post('/create',(req, res) => {
     console.log(req.body);
     ProjectController.createProject(req.body)
             .then(data => {
-                res.status(data.status).send({success: data.success, data: data.message});
+                res.status(data.status).send({success: data.success, message: data.message, data:data.data});
             })
             .catch((error) => {
                 console.log(error);

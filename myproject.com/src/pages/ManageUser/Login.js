@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import jwt from 'jsonwebtoken';
-
+import './css/login.css';
 class Login extends Component {
 
     constructor(props) {
@@ -78,10 +78,11 @@ class Login extends Component {
 };
     render() {
         return (
-            <div className="container-fluid body col-md-8">
-                <form className="" onSubmit={this.handleSubmit}>
+            <div className="container-fluid body ">
+                <form className=" login-from col-md-10" onSubmit={this.handleSubmit}>
+                    <label className="text-primary login-title">Log Your Self</label>
                     <div className="form-group row login">
-                        <div >Email :</div>
+                        <div className="login-text">Email :</div>
                         <input
                             className="form-control"
                             type="text"
@@ -94,7 +95,7 @@ class Login extends Component {
                         <label className="text-danger">{this.state.emailError}</label>
                     </div>
                     <div className="row">
-                        <div >Password :</div>
+                        <div className="login-text">Password :</div>
                         <input
                             className="form-control"
                             type="password"
@@ -106,17 +107,7 @@ class Login extends Component {
                         />
                         <label className="text-danger">{this.state.passwordError}</label>
                     </div>
-
-                    <div className="">
-                        <div className="">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                            <label className="form-check-label">Remember Me</label>
-                        </div>
-                        <div className="">
-                            <a href="/password-forgot" className="" aria-busy="false">Forgot my password!</a>
-                        </div>
-                    </div>
-                    <button type="submit" className="btn " name="login-button">Log in</button>
+                    <button type="submit" className="btn btn-success login-btn" name="login-button">Log in</button>
                 </form>
                 <label>{this.state.email}</label><br/>
                 <label>{this.state.password}</label><br/>
