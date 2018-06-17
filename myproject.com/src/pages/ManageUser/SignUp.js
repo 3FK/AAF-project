@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import './css/SignUp.css';
-// import TextField from '@material-ui/core/TextField';
+import map from 'lodash/map';
+
+import countryList from '../countryList';
+
 class SignUp extends Component {
+
 
     constructor(props) {
         super(props);
@@ -27,12 +31,12 @@ class SignUp extends Component {
 
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value});
-
     }
     handleSubmit(e) {
         // alert('A name was submitted: ' + this.state.value);
         e.preventDefault();
         this.register();
+        return (window.location="/login");
     }
 
     register = () => {
@@ -109,6 +113,9 @@ class SignUp extends Component {
     };
 
     render() {
+        const options = map(countryList, (val, key) =>
+            <option key={key} value={val}>{val}</option>
+        );
         return (
             <div className="container-fluid body ">
                 <form className="signUp-form col-md-8" onSubmit={this.handleSubmit}>
@@ -186,16 +193,27 @@ class SignUp extends Component {
                     </div>
                     <div className="form-group">
                         <div className="signUp-text">Country :</div>
-                        <input
+                        {/*<input*/}
+                            {/*className="form-control"*/}
+                            {/*onChange={this.handleChange}*/}
+                            {/*type="text"*/}
+                            {/*placeholder="country"*/}
+                            {/*id="country"*/}
+                            {/*name="country"*/}
+                            {/*// errorText={this.state.passwordError}*/}
+                            {/*// floatingLabelFixed*/}
+                        {/*/>*/}
+                        <select
                             className="form-control"
                             onChange={this.handleChange}
-                            type="text"
-                            placeholder="country"
+                            // placeholder="country"
                             id="country"
                             name="country"
-                            // errorText={this.state.passwordError}
-                            // floatingLabelFixed
-                        />
+                        >
+                            <option value="" disabled>Choose your Country</option>
+                            {options}
+
+                        </select>
                         <label className="text-danger">{this.state.countryError}</label>
                     </div>
                     <div className="form-group">
@@ -223,7 +241,7 @@ class SignUp extends Component {
                 <label>{this.state.lastname}</label><br/>
                 <label>{this.state.username}</label><br/>
                 <label>{this.state.email}</label><br/>
-                <label>{this.state.password}</label><br/>
+                <label>{this.state.country}</label><br/>
             </div>
         );
     }

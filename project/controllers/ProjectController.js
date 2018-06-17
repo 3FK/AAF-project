@@ -103,6 +103,29 @@ var ProjectContoller = function (){
                     reject({status: 500, "success":false , errors:"Project not found"});
                 })
         })
+    };
+    this.getAllUserProjects = (Uid) => {
+        return new Promise((resolve, reject) => {
+            Project.find(
+                { projectOwner: Uid},
+                {Collaborators:{$elemMatch:{_id:Uid}}}
+                )
+                .then(function (project) {
+                    if (!project) {
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                    else {
+                        if (project.length>0){
+                            resolve({status:200,  "success":true , message: "Project found", name:project});
+                        }
+                        reject({status: 500, "success":false , errors:"Project not found"});
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject({status: 500, "success":false , errors:"Project not found"});
+                })
+        })
     }
 };
 module.exports =new ProjectContoller();

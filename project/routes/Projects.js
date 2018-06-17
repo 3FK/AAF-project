@@ -51,6 +51,17 @@ router.get('/ProjectByUser', function(req, res, next) {
             res.status(error.status).send({errors: error.errors, message: "error " + error.message});
         })
 });
+router.get('/allUserProjects', function (req, res) {
+    const Uid = req.param('id');
+    ProjectController.getAllUserProjects(Uid)
+        .then(data => {
+            res.status(data.status).send({success: data.success, data: data.message  , name: data.name});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(error.status).send({errors: error.errors, message: "error " + error.message});
+        })
+});
 
 router.post('/create',(req, res) => {
     console.log(req.body);

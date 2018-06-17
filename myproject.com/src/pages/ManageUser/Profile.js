@@ -12,6 +12,8 @@ class Profile extends Component {
             lastname: '',
             username: '',
             email: '',
+            country:'',
+            description:''
         };
     };
     componentDidMount(){
@@ -39,6 +41,8 @@ class Profile extends Component {
                         lastname: res.name.lastname,
                         username: res.name.username,
                         email: res.name.email,
+                        country:res.name.country,
+                        description:res.name.description
                     });
 
                 }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './css/CreateProject.css';
+
 class CreateProject extends Component {
 
     constructor(props) {
@@ -120,19 +122,26 @@ class CreateProject extends Component {
     getCollaborators= () =>{
         let CollaboratorsArray=[];
         for(let item of this.state.Collaborators){
-            CollaboratorsArray.push(<div key={item._id}>
-                <div className="d-inline">
-                    {item.username}
-                </div>
-                <div className="d-inline">
-                    <button
-                        type="button"
-                        className="btn "
-                        onClick={()=>{this.removeCollaborators(item)}}
-                        name="remove"
-                    >remove
-                    </button>
-                </div>
+            CollaboratorsArray.push(
+                <div key={item._id}>
+                    <div className="input-group createProject-btn">
+                        <input
+                            type="text"
+                            className="form-control text-success col-md-2"
+                            value={item.username}
+                            readOnly
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-danger"
+                                type="button"
+                                onClick={()=>{this.removeCollaborators(item)}}
+                                name="remove"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
             </div>);
         }
         return CollaboratorsArray;
@@ -166,17 +175,23 @@ class CreateProject extends Component {
         let ProjectFieldArray=[];
         for(let item of this.state.projectField){
             ProjectFieldArray.push(<div>
-                <div className="d-inline">
-                    {item}
-                </div>
-                <div className="d-inline">
-                    <button
-                        type="button"
-                        className="btn "
-                        onClick={()=>{this.removeField(item)}}
-                        name="remove"
-                    >remove
-                    </button>
+                <div className="input-group createProject-btn">
+                    <input
+                        type="text"
+                        className="form-control text-success col-md-1"
+                        value={item}
+                        readOnly
+                    />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-danger"
+                                type="button"
+                                onClick={()=>{this.removeField(item)}}
+                                name="remove"
+                            >
+                               Remove
+                            </button>
+                        </div>
                 </div>
             </div>);
         }
@@ -201,10 +216,10 @@ class CreateProject extends Component {
 
     render() {
         return (
-            <div className="container-fluid body col-md-8">
-                <form className="" onSubmit={this.handleSubmit}>
+            <div className="container-fluid body ">
+                <form className="createProject-from col-md-10" onSubmit={this.handleSubmit}>
                     <div className="form-group row login">
-                        <div >Project Name :</div>
+                        <div className="createProject-text">Project Name :</div>
                         <input
                             className="form-control"
                             type="text"
@@ -217,7 +232,7 @@ class CreateProject extends Component {
                         <label className="text-danger">{this.state.projectNameError}</label>
                     </div>
                     <div className="row">
-                        <div >Project Description :</div>
+                        <div className="createProject-text">Project Description :</div>
                         <input
                             className="form-control"
                             type="text"
@@ -230,50 +245,82 @@ class CreateProject extends Component {
                         <label className="text-danger">{this.state.projectDescriptionError}</label>
                     </div>
                     <div className="row">
-                        <div className="">Collaborators :</div>
-                        <input
-                            className="form-control d-inline "
-                            type="text"
-                            placeholder="Collaborators"
-                            id="searchUser"
-                            name="searchUser"
-                            value={this.state.searchUser}
-                            onChange={this.handleChange}
-                        />
-                        <button type="button" className="btn d-inline " onClick={this.getUser} name="searchUser">Search User</button>
+                        <div className="createProject-text">Collaborators :</div>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Collaborators"
+                                id="searchUser"
+                                name="searchUser"
+                                value={this.state.searchUser}
+                                onChange={this.handleChange}
+                            />
+                                <div className="input-group-append">
+                                    <button
+                                        className="btn btn-info"
+                                        type="button"
+                                        onClick={this.getUser}
+                                        name="searchUser"
+                                    >
+                                        Search User
+                                    </button>
+                                </div>
+                        </div>
+                        {/*<input*/}
+                            {/*className="form-control "*/}
+                            {/*type="text"*/}
+                            {/*placeholder="Collaborators"*/}
+                            {/*id="searchUser"*/}
+                            {/*name="searchUser"*/}
+                            {/*value={this.state.searchUser}*/}
+                            {/*onChange={this.handleChange}*/}
+                        {/*/>*/}
+                        {/*<button type="button" className="btn btn-info createProject-btn createProject-btn-custom" onClick={this.getUser} name="searchUser">Search User</button>*/}
                     </div>
                     <div>
                         {this.getCollaborators()}
                     </div>
                     <div className="row">
-                        <div className="">Project Fields :</div>
-                        <input
-                            className="form-control d-inline "
-                            type="text"
-                            placeholder="eg: react angular java c++ "
-                            id="field"
-                            name="field"
-                            value={this.state.field}
-                            onChange={this.handleChange}
-                        />
-                        <button type="button" className="btn d-inline " onClick={this.addField} name="addField">Add Fields</button>
+                        <div className="createProject-text">Project Fields :</div>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="eg: react angular java c++ "
+                                id="field"
+                                name="field"
+                                value={this.state.field}
+                                onChange={this.handleChange}
+                            />
+                            <div className="input-group-append">
+                                <button
+                                    className="btn btn-info"
+                                    type="button"
+                                    onClick={this.addField}
+                                    name="addField"
+                                >
+                                    Add Fields
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div>
                             {this.getProjectFields()}
                     </div>
-                    <div className="">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="Private"
-                            id="Private"
-                            // ref="complete"
-                            onChange={this.checkPrivate}
-                        />
-                        <label className="form-check-label">Private</label>
+                    <div className="row">
+                        <label className="createProject-text">
+                            <input
+                                className="createProject-checkbox"
+                                type="checkbox"
+                                name="Private"
+                                id="Private"
+                                onChange={this.checkPrivate}
+                            />
+                            Private
+                        </label>
                     </div>
-
-                    <button type="submit" className="btn " name="login-button">Create Project</button>
+                    <button type="submit" className="btn btn-success createProject-btn" name="login-button">Create Project</button>
                 </form>
             </div>
         );

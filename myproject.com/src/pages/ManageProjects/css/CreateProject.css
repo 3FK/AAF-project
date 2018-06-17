@@ -1,0 +1,44 @@
+.createProject-from{
+    /*background-color: #535c68;*/
+    background-color:#2f3640;
+    background-size:cover;
+    /*height: 600px;*/
+    padding: 30px 50px 100px 50px;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-left: 144px;
+    margin-bottom: 50px;
+}
+.createProject-title{
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 62px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-left: 450px;
+    margin-bottom: 70px;
+}
+.createProject-text{
+    color: #0fbcf9;
+    font-family: 'Lato';
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 62px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.createProject-btn{
+    margin-top: 10px;
+}
+.createProject-btn-custom{
+    /*float: right;*/
+    margin-top: 110px;
+    position: absolute;
+    right:40px;
+}
+.createProject-checkbox{
+    height: 18px;
+    width: 20px;
+}
