@@ -6,7 +6,7 @@ class ProjectPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // id:this.props.params.id,
+            user:false,
             id:'',
             Project:[],
             projectName: '',
@@ -21,7 +21,9 @@ class ProjectPage extends Component {
     componentDidMount(){
         this.getProjects();
         if (this.state.projectOwner===localStorage.getItem('id')){
-            this.manage()
+            this.setState({
+                user:true
+            })
         }
         else {
             this.desc();
@@ -29,25 +31,28 @@ class ProjectPage extends Component {
         console.log(this.props.match.params.id);
     }
     manage = () => {
-        return (
-            <div className="btn-group projectPage-btn" role="group" aria-label="Basic example">
-                <Link
-                    className="btn btn-primary"
-                    to={"/editProject/"+(this.state.id)}
-                    name="view"
-                >
-                    Modify Project
-                </Link>
-                <button
-                    type="button"
-                    className="btn btn-danger"
-                    name="login-button"
-                    onClick={this.deleteProject}
-                >
-                    Delete Project
-                </button>
-            </div>
-        )
+        if (this.state.user===true){
+            return (
+                <div className="btn-group projectPage-btn" role="group" aria-label="Basic example">
+                    <Link
+                        className="btn btn-primary"
+                        to={"/editProject/"+(this.state.id)}
+                        name="view"
+                    >
+                        Modify Project
+                    </Link>
+                    <button
+                        type="button"
+                        className="btn btn-danger"
+                        name="login-button"
+                        onClick={this.deleteProject}
+                    >
+                        Delete Project
+                    </button>
+                </div>
+            )
+        }
+
     };
     desc = () => {
         return (
@@ -122,18 +127,20 @@ class ProjectPage extends Component {
                                 <div className="projectPage-main-title ">
                                     {this.state.projectName}
                                 </div>
-                                <div className="projectPage-text projectPage-DueDate">Due Date : {this.state.DueDate}</div>
-                                <div className="projectPage-manage col-md-2">
-                                    <div >
-                                        {this.manage()}
+                                <div className="desc">
+                                    <div className="projectPage-text projectPage-DueDate">Due Date : {this.state.DueDate}</div>
+                                    <div className="projectPage-manage col-md-2">
+                                        <div >
+                                            {this.manage()}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div className=" row">
-                                <div className="d-inline">
+                                <div align="center" className="projectPage-Users col-md-4">
                                     {
                                         (typeof (this.state.Collaborators)==='object')?
-                                            <div align="center" className="col-md-4 projectPage-Users">
+                                            <div  >
                                                 <div className="projectPage-title">Collaborators</div>
                                                 {
                                                     this.state.Collaborators.map((gg) =>
@@ -154,10 +161,10 @@ class ProjectPage extends Component {
                                             null
                                     }
                                 </div>
-                                <div className="d-inline ">
+                                <div align="center"  className="projectPage-Users col-md-4">
                                     {
                                         (typeof (this.state.projectField)==='object')?
-                                            <div align="center" className=" projectPage-Users col-md-4">
+                                            <div >
                                                 <div className="projectPage-title">Project Field</div>
                                                 {
                                                     this.state.projectField.map((gg) =>

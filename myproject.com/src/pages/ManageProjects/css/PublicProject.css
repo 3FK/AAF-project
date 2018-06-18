@@ -1,13 +1,4 @@
-.profile-title{
-    color: #0fbcf9;
-    font-family: 'Lato';
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 62px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.profile-form{
+.publicProject-from{
     /*background-color: #535c68;*/
     background-color:#2f3640;
     background-size:cover;
@@ -17,67 +8,43 @@
     border-radius: 10px;
     margin-top: 25px;
     margin-left: 100px;
-    margin-right: 100px;
     margin-bottom: 50px;
 }
-.profileProject-from{
-    /*background-color: #535c68;*/
-    background-color:#f5f6fa;
-    background-size:cover;
-    /*height: 600px;*/
-    padding: 20px 50px 20px 50px;
-    position: relative;
-    border-radius: 10px;
-    margin-top: 25px;
-    margin-left: 100px;
-    margin-bottom: 50px;
-}
-.profile-main-title{
+.publicProject-main-title{
     color: #0fbcf9;
     font-family: 'Lato';
     font-weight: 600;
     font-size: 40px;
-    line-height: 40px;
+    line-height: 62px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /*margin-left: 650px;*/
     margin-bottom: 25px;
 }
-.profile-title{
+.publicProject-title{
     color: #0fbcf9;
     font-family: 'Lato';
     font-weight: 600;
     font-size: 30px;
-    line-height: 35px;
+    line-height: 62px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: center;
     /*margin-left: 450px;*/
     /*margin-bottom: 25px;*/
 }
-.profile-text{
+.publicProject-text{
     color: #0fbcf9;
     font-family: 'Lato';
     font-weight: 200;
-    font-size: 28px;
-    line-height: 28px;
+    font-size: 20px;
+    line-height: 20px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-top: 20px;
 }
-.profile-btn{
+.publicProject-btn{
     margin-top: 40px;
     margin-bottom: 20px;
-}
-.profileDesc{
-    float: right;
-    margin-left: auto;
-    margin-right: 50px;
-}
-.profileDesc div{
-    display: flex;
-    flex-direction: row;
-}
-.profileDescCustom{
-    margin-left: 20px;
+
 }

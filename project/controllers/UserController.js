@@ -134,6 +134,30 @@ var UserContoller = function (){
             })
         })
     };
+    this.ChangePassword = (id, data) => {
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                _id: id
+            })
+                .then(function (user) {
+                    if (!user) {
+                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
+                        reject({status: 500, "success":false , errors:"User not found"});
+                    }
+                    if (!user.comparePassword(data.password, user.password)) {
+                        // return res.send({error: true, message: "Wrong password!"});, message: "error in saving"+error
+                        reject({status: 500, "success":false , errors:"Invalid Password "});
+                    }
+                    const pass = user.hashPassword(data.NewPassword);
+                    User.update({_id: id}, {password:pass}).then(() => {
+                        resolve({status: 200, message: "password Successfully Changed"});
+                    }).catch(err => {
+                        reject({status: 500, message: "Error:- " + err});
+                    })
+                })
+        })
+
+    };
 
     this.deleteUser = (id) => {
         return new Promise((resolve, reject) => {

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import pic from '../../assets/reviwers/reviwer2.jpg';
 import './css/profile.css';
 import {Link} from 'react-router-dom';
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user:false,
+            projectsFound:false,
             Projects:[],
             id:'',
             firstname: '',
@@ -21,21 +22,77 @@ class Profile extends Component {
             const id = this.props.match.params.id;
             this.getUser(id);
             this.getUsersProjects(id);
+            this.getProjects();
         }
         else {
             if (localStorage.getItem('id')) {
                 const userid = localStorage.getItem('id');
                 this.getUser(userid);
                 this.getUsersProjects(userid);
+                this.setState({
+                    user:true
+                });
+                this.getProjects();
             }
             else {
                 return (window.location="/login");
             }
         }
-
-        // console.log(this.props.match.params.id);
-
     }
+    manage = () => {
+        if (this.state.user===true){
+            return(
+                <div className="btn-group profile-btn" role="group" aria-label="Basic example">
+                    <Link
+                        className="btn btn-primary"
+                        to={"/EditProfile/"+(this.state.id)}
+                        name="view"
+                    >
+                        Edit Profile
+                    </Link>
+                    <Link
+                        className="btn btn-warning"
+                        to={"/ChangePassword/"+(this.state.id)}
+                        name="view"
+                    >
+                        Change Password
+                    </Link>
+                    <button
+                        type="button"
+                        className="btn btn-danger"
+                        name="login-button"
+                        onClick={this.deleteUser}
+                    >
+                        Delete Profile
+                    </button>
+                </div>
+            )
+        }
+
+    };
+    deleteUser = (id) =>{
+            fetch("http://192.168.96.1:3001/user/deleteUser?id="+this.state.id, {
+                method: "DELETE",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(Response => Response.json())
+                .then(res => {
+                    // alert(res.message);
+                    if (res.success === true) {
+                        alert("user Successfully deleted ");
+                        localStorage.clear();
+                        return (window.location="/");
+                    }
+                })
+                .catch((error) => {
+                    alert(error);
+                    console.log(error);
+                })
+            // .done();
+    };
     getUser = (id) => {
         fetch("http://localhost:3001/user/findUser?u="+id, {
             method: "GET",
@@ -47,7 +104,6 @@ class Profile extends Component {
             .then(response => response.json())
             .then(res => {
                 if (res.success === true) {
-                    alert('user found');
                     console.log(res.name._id);
                     this.setState({
                         id: res.name._id,
@@ -61,7 +117,7 @@ class Profile extends Component {
 
                 }
                 else {
-                    alert('no projects to show');
+
                 }
             });
     };
@@ -77,83 +133,114 @@ class Profile extends Component {
             .then(response => response.json())
             .then(res => {
                 if (res.success === true) {
-                    alert('project found');
                     for(let item of res.name) {
                         this.state.Projects.push(item);
                     }
+                    this.setState({
+                        projectsFound:true
+                    })
                     this.setState(this.state);
                     console.log(this.state.Projects);
                 }
                 else {
                     alert('no projects to show');
+                    this.noProjects();
                 }
             });
+    };
+    noProjects = () => {
+        if (this.state.projectsFound===false){
+            return(
+                <div className=" myProject-from col-md-5">
+                    <div className="myProject-title">No Projects yet create one Now</div>
+                    <Link
+                        className="btn btn-success myProject-btn"
+                        to={"/createProject"}
+                        name="view"
+                    >
+                        Create Project
+                    </Link>
+                </div>
+            )
+        }
+
+    };
+    getProjects= () =>{
+        let ProjectsArray=[];
+        for(let item of this.state.Projects){
+            ProjectsArray.push(
+
+                <div className="profileProject-from  col-md-3" key={item._id}>
+                    <div align="center" className="myProject-title">
+                        {item.projectName}
+                    </div>
+                    <div className="myProject-text text-info">
+                        <div className="myProject-text">Description :</div>
+                        {item.projectDescription}
+                    </div>
+                    <div className="myProject-text text-info">
+                        <div className="myProject-text">Due Date :</div>
+                        {item.DueDate}
+                    </div>
+                    <div>
+                        {
+                            (typeof (item.projectField)==='object')?
+                                <div className="text-info myProject-text">
+                                    <div className="myProject-text">Project Fields :</div>
+                                    {
+                                        item.projectField.map((gg) =>
+                                            <div align="center">
+                                                {gg}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                                :
+                                null
+                        }
+                    </div>
+                    <div align="center" className="">
+                        <Link
+                            className="btn btn-success myProject-btn"
+                            to={"/projectPage/"+(item._id)}
+                            name="view"
+                        >
+                            View Project
+                        </Link>
+                    </div>
+                </div>);
+            console.log(ProjectsArray)
+        }
+        return ProjectsArray;
     };
     render() {
         return (
             <div className="container-fluid col-md-12 ">
-                <div className="row">
-                    <div>
-                        <img className="rounded image" src={pic} />
-                    </div>
-                    <div>
-                        <Link
-                            type="button"
-                            className="btn "
-                            to={"/EditProfile/"+(this.props.match.params.id)}
-                            name="remove"
-                        >
-                            Edit Profile
-                        </Link>
-                    </div>
-                    <div>
-                        <div className="a font-weight-bold font-italic name profile-title">
-                            Hi, I'm{this.state.username} !
+                <div className="profile-form">
+                    <div className="">
+                        <div>
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="a font-weight-bold font-italic name profile-main-title">
+                                        Hi, I'm  {this.state.username}
+                                    </div>
+                                    <div className="a font-weight-bold font-italic profile-title">
+                                        From {this.state.country}
+                                    </div>
+                                </div>
+                                <div className="profileDesc col-md-3">
+                                    {this.manage()}
+                                </div>
+                            </div>
+                            <div className="profile-text profileDescCustom">
+                                 {this.state.description}
+                            </div>
                         </div>
-                        <div className="a font-weight-bold font-italic address">
-                            Anuradhapura, SriLanka.
-                        </div>
-                        <div className="user-details">
-                            Full-stack engineer on an employer facing team<br/>
-                            - Implemented an email content generation service, simplified previous process of adding new email
-                            from modifying 4 projects to 2 projects<br/>
-                        </div>
-                        {/*<div className="edit-profile">*/}
-                            {/*<a className="btn btn-secondary text-black-50 " href="#" role="button">Edit profile</a>*/}
-                        {/*</div>*/}
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <div className="a font-weight-bold title">
-                        Projects
-                    </div>
-                    <div className="row">
-                        <div className="project-card " >
-                            <a className="text-dark" href="#" role="button">android</a><br/>
-                            <label>
-                                Forked from pbarbiero/basic-electron-react-boilerplate
-                            </label>
-                            <label className="d-inline">android</label>
-                            <label className="d-inline">java</label>
-
+                        <div>
+                            <div align="center" className="profile-title">Projects</div>
+                            {this.getProjects()}
                         </div>
                     </div>
-                    {/*<div id="list-example" className="list-group ">*/}
-                        {/*<a className="list-group-item bg-dark text-secondary list-group-item-action" href="#list-item-1">android</a>*/}
-                        {/*<a className="list-group-item bg-dark text-secondary list-group-item-action" href="#list-item-2">react native</a>*/}
-                        {/*<a className="list-group-item bg-dark text-secondary list-group-item-action" href="#list-item-3">laravel</a>*/}
-                        {/*<a className="list-group-item bg-dark text-secondary list-group-item-action" href="#list-item-4">angular</a>*/}
-                    {/*</div>*/}
-                    {/*<div data-spy="scroll" data-target="#list-example" data-offset="0" className="projects col-md-8">*/}
-                        {/*<h4 id="list-item-1">Item 1</h4>*/}
-                        {/*<p>...</p>*/}
-                        {/*<h4 id="list-item-2">Item 2</h4>*/}
-                        {/*<p>...</p>*/}
-                        {/*<h4 id="list-item-3">Item 3</h4>*/}
-                        {/*<p>...</p>*/}
-                        {/*<h4 id="list-item-4">Item 4</h4>*/}
-                        {/*<p>...</p>*/}
-                    {/*</div>*/}
                 </div>
             </div>
         );

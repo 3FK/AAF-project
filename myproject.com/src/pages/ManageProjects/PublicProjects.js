@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import './css/PublicProject.css';
 
 class PublicProjects extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class PublicProjects extends Component {
             .then(response => response.json())
             .then(res => {
                 if (res.success === true) {
-                    alert('project found');
+
                     for(let item of res.name) {
                         this.state.Projects.push(item);
                     }
@@ -39,29 +40,34 @@ class PublicProjects extends Component {
         let ProjectsArray=[];
         for(let item of this.state.Projects){
             ProjectsArray.push(
-                <div key={item._id}>
-                    <div className="d-inline">
+                <div className="publicProject-from col-md-3" key={item._id}>
+                    <div align="center" className="publicProject-title">
                         {item.projectName}
                     </div>
-                    <div>
+                    <div className="publicProject-text text-info">
+                        <div className="publicProject-text">Description :</div>
                         {item.projectDescription}
                     </div>
                     <div>
+                        <div className="myProject-text">Collaborators :</div>
                         {
                             (typeof (item.Collaborators)==='object')?
                                 <div>
                                     {
                                         item.Collaborators.map((gg) =>
-                                            <div>
-                                                {gg.username}
-                                                <Link
-                                                    type="button"
-                                                    className="btn "
-                                                    to={"/profile/"+(gg._id)}
-                                                    name="view"
-                                                >
-                                                    View User
-                                                </Link>
+                                            <div className="myProject-text text-info">
+                                                <div align="center">
+                                                    <div >
+                                                        {gg.username}
+                                                    </div>
+                                                    <Link
+                                                        className="btn btn-info publicProject-btn"
+                                                        to={"/profile/"+(gg._id)}
+                                                        name="view"
+                                                    >
+                                                        View User
+                                                    </Link>
+                                                </div>
                                             </div>
                                         )
                                     }
@@ -73,10 +79,11 @@ class PublicProjects extends Component {
                     <div>
                         {
                             (typeof (item.projectField)==='object')?
-                                <div>
+                                <div className="publicProject-text text-info">
+                                    <div className="publicProject-text">Project Fields :</div>
                                     {
                                         item.projectField.map((gg) =>
-                                            <div>
+                                            <div align="center">
                                                 {gg}
                                             </div>
                                         )
@@ -86,10 +93,9 @@ class PublicProjects extends Component {
                                 null
                         }
                     </div>
-                    <div className="d-inline">
+                    <div align="center" className="">
                         <Link
-                            type="button"
-                            className="btn "
+                            className="btn btn-success publicProject-btn"
                             to={"/projectPage/"+(item._id)}
                             name="View"
                         >
@@ -106,7 +112,7 @@ class PublicProjects extends Component {
 
     render(){
         return (
-            <div className="body">
+            <div className="row">
                 {this.getProjects()}
             </div>
         )

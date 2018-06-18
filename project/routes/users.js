@@ -213,12 +213,42 @@ router.put('/editUser', userEditValidation, (req, res) => {
         })
     }
 });
+const changePasswordValidation = [
+    check("password")
+        .not()
+        .isEmpty()
+        .withMessage("Password is required"),
+    check("NewPassword")
+        .not()
+        .isEmpty()
+        .withMessage("Password is required")
+        .isLength({ min: 6 })
+        .withMessage("Password should be at least 6 characters")
+        .matches(/\d/)
+        .withMessage('include at least one number'),
+];
+router.put('/changePassword', changePasswordValidation, (req, res) => {
+    console.log(req.param('id'));
+    const id = req.param('id');
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.send({ errors: errors.mapped() });
+    }else {
+        userController.ChangePassword(id, req.body).then(data => {
+            res.status(data.status).send({success: true,message: data.message});
+        }).catch(err => {
+            res.status(err.status).send({message: err.message});
+        })
+    }
+});
+
 
 router.delete('/deleteUser', (req, res) => {
     console.log(req.param('id'));
     const id = req.param('id');
     userController.deleteUser(id).then(data => {
-        res.status(data.status).send({message: data.message});
+        res.status(data.status).send({success: true, message: data.message});
     }).catch(err => {
         res.status(err.status).send({message: err.message});
     })

@@ -193,16 +193,6 @@ class SignUp extends Component {
                     </div>
                     <div className="form-group">
                         <div className="signUp-text">Country :</div>
-                        {/*<input*/}
-                            {/*className="form-control"*/}
-                            {/*onChange={this.handleChange}*/}
-                            {/*type="text"*/}
-                            {/*placeholder="country"*/}
-                            {/*id="country"*/}
-                            {/*name="country"*/}
-                            {/*// errorText={this.state.passwordError}*/}
-                            {/*// floatingLabelFixed*/}
-                        {/*/>*/}
                         <select
                             className="form-control"
                             onChange={this.handleChange}

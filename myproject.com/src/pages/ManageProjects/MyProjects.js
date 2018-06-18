@@ -6,6 +6,7 @@ class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            projectFound:false,
             Projects:[],
         };
     }
@@ -30,17 +31,39 @@ class MyProjects extends Component {
             .then(response => response.json())
             .then(res => {
                 if (res.success === true) {
-                    alert('project found');
+
                     for(let item of res.name) {
                         this.state.Projects.push(item);
                     }
+                    this.setState({
+                        projectFound:true
+                    });
                     this.setState(this.state);
                     console.log(this.state.Projects);
                 }
                 else {
                     alert('no projects to show');
+                    this.noProjects();
+
                 }
             });
+    };
+    noProjects = () => {
+        if(this.state.projectFound===false){
+            return(
+                <div className=" myProject-from col-md-5">
+                    <div className="myProject-title">No Projects yet create one Now</div>
+                    <Link
+                        className="btn btn-success myProject-btn"
+                        to={"/createProject"}
+                        name="view"
+                    >
+                        Create Project
+                    </Link>
+                </div>
+            )
+        }
+
     };
     getProjects= () =>{
         let ProjectsArray=[];
@@ -59,31 +82,6 @@ class MyProjects extends Component {
                         <div className="myProject-text">Due Date :</div>
                         {item.DueDate}
                     </div>
-                    {/*<div>*/}
-                        {/*{*/}
-                            {/*(typeof (item.Collaborators)==='object')?*/}
-                                {/*<div>*/}
-                                    {/*{*/}
-                                        {/*item.Collaborators.map((gg) =>*/}
-                                            {/*<div>*/}
-                                                {/*{gg.username}*/}
-                                                {/*<Link*/}
-                                                    {/*type="button"*/}
-                                                    {/*className="btn "*/}
-                                                    {/*to={"/profile/"+(gg._id)}*/}
-                                                    {/*name="remove"*/}
-                                                {/*>*/}
-                                                    {/*View User*/}
-                                                {/*</Link>*/}
-                                            {/*</div>*/}
-                                        {/*)*/}
-                                    {/*}*/}
-                                {/*</div>*/}
-                                {/*:*/}
-                                {/*null*/}
-                        {/*}*/}
-                    {/*</div>*/}
-
                     <div>
                         {
                             (typeof (item.projectField)==='object')?
@@ -103,7 +101,6 @@ class MyProjects extends Component {
                     </div>
                     <div align="center" className="">
                         <Link
-                            type="button"
                             className="btn btn-success myProject-btn"
                             to={"/projectPage/"+(item._id)}
                             name="view"
@@ -125,6 +122,9 @@ class MyProjects extends Component {
                 </div>
                 <div className="row">
                     {this.getProjects()}
+                </div>
+                <div>
+                    {this.noProjects()}
                 </div>
             </div>
         )}

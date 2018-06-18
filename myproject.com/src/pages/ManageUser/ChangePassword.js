@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import jwt from 'jsonwebtoken';
 import './css/login.css';
-class Login extends Component {
+class ChangePassword extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            emailError:'',
             password: '',
-            passwordError:''
+            passwordError:'',
+            NewPassword:'',
+            NewPasswordError:''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,47 +21,41 @@ class Login extends Component {
     handleSubmit(e) {
         // alert('A name was submitted: ' + this.state.value);
         e.preventDefault();
-        this.login();
+        this.changePassword();
     }
 
-    login = () => {
+    changePassword = () => {
         console.log('sss');
         this.setState({
-            emailError:'',
-            passwordError:''
-        })
-        fetch("http://192.168.96.1:3001/user/logIn", {
-            method: "POST",
+            passwordError:'',
+            NewPasswordError:''
+        });
+        fetch("http://192.168.96.1:3001/user/changePassword?id="+this.props.match.params.id, {
+            method: "PUT",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                email: this.state.email.toLowerCase(),
-                password: this.state.password
+                password: this.state.password,
+                NewPassword: this.state.NewPassword
             })
         })
             .then(Response => Response.json())
             .then(res => {
                 if (res.success === true) {
-                    const token = res.token;
-                    const tok = jwt.decode(token);
-                    localStorage.setItem('jwtToken', token);
-                    localStorage.setItem('id', tok.id);
-                   // sessionStorage.setItem('isLogin',true);
-                    console.log(jwt.decode(token));
-                    console.log(tok);
-                    return (window.location="/");
+                    alert("Your Password Successfully Changed ");
+                    return (window.location="/profile");
                 }
                 else {
                     if (res.errors.email) {
                         this.setState({
-                            emailError:res.errors.email.msg
+                            passwordError:res.errors.password.msg
                         });
                     }
                     if (res.errors.password) {
                         this.setState({
-                            passwordError:res.errors.password.msg
+                            NewPasswordError:res.errors.NewPassword.msg
                         });
                     }
                     else {
@@ -74,31 +67,18 @@ class Login extends Component {
             .catch((error) => {
                 console.log(error);
             })
-};
+    };
     render() {
         return (
             <div className="container-fluid body ">
                 <form className=" login-from col-md-10" onSubmit={this.handleSubmit}>
-                    <label className="text-primary login-title">Log Your Self</label>
+                    <label className="text-primary login-title">Change Your Password</label>
                     <div className="form-group row login">
-                        <div className="login-text">Email :</div>
-                        <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Email"
-                            id="email"
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                        <label className="text-danger">{this.state.emailError}</label>
-                    </div>
-                    <div className="row">
-                        <div className="login-text">Password :</div>
+                        <div className="login-text">Current Password :</div>
                         <input
                             className="form-control"
                             type="password"
-                            placeholder="Password"
+                            placeholder="password"
                             id="password"
                             name="password"
                             value={this.state.password}
@@ -106,7 +86,20 @@ class Login extends Component {
                         />
                         <label className="text-danger">{this.state.passwordError}</label>
                     </div>
-                    <button type="submit" className="btn btn-success login-btn" name="login-button">Log in</button>
+                    <div className="row">
+                        <div className="login-text">New Password :</div>
+                        <input
+                            className="form-control"
+                            type="password"
+                            placeholder="New Password"
+                            id="NewPassword"
+                            name="NewPassword"
+                            value={this.state.NewPassword}
+                            onChange={this.handleChange}
+                        />
+                        <label className="text-danger">{this.state.NewPasswordError}</label>
+                    </div>
+                    <button type="submit" className="btn btn-success login-btn" name="login-button">Change Password</button>
                 </form>
                 <label>{this.state.email}</label><br/>
                 <label>{this.state.password}</label><br/>
@@ -115,4 +108,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default ChangePassword;

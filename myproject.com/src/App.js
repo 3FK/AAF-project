@@ -14,6 +14,7 @@ import Error from './pages/Error';
 import ProjectPage from "./pages/ManageProjects/ProjectPage";
 import MyProjects from "./pages/ManageProjects/MyProjects";
 import EditProjects from "./pages/ManageProjects/EditProject";
+import ChangePassword from "./pages/ManageUser/ChangePassword";
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route exact path='/profile' component={Profile}/>
                     <Route exact path='/profile/:id' component={Profile}/>
                     <Route exact path='/EditProfile/:id' component={EditProfile}/>
+                    <Route exact path='/ChangePassword/:id' component={ChangePassword}/>
                     <Route exact path='/signup' component={Signup}/>
                     <Route exact path='/createProject' component={CreateProject}/>
                     <Route exact path='/publicProjects' component={PublicProjects}/>

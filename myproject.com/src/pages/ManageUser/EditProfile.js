@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import './css/SignUp.css';
+import map from 'lodash/map';
+import countryList from '../countryList';
 
 class EditProfile extends Component {
     constructor(props) {
@@ -14,6 +17,9 @@ class EditProfile extends Component {
             lastnameError:'',
             usernameError:'',
             emailError:'',
+            country:'',
+            countryError:'',
+            description:''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,6 +51,8 @@ class EditProfile extends Component {
                 lastname: this.state.lastname,
                 username: this.state.username,
                 email: this.state.email.toLowerCase(),
+                country:this.state.country,
+                description:this.state.description
             })
         })
             .then(Response => Response.json())
@@ -74,6 +82,11 @@ class EditProfile extends Component {
                     if (res.errors.email) {
                         this.setState({
                             emailError:res.errors.email.msg
+                        });
+                    }
+                    if (res.errors.country) {
+                        this.setState({
+                            countryError:res.errors.country.msg
                         });
                     }
                 }
@@ -107,6 +120,8 @@ class EditProfile extends Component {
                             lastname:res.name.lastname,
                             username:res.name.username,
                             email:res.name.email,
+                            country:res.name.country,
+                            description:res.name.description,
                         });
                     //}
                     // this.setState(this.state);
@@ -118,11 +133,15 @@ class EditProfile extends Component {
             });
     };
     render() {
+        const options = map(countryList, (val, key) =>
+            <option key={key} value={val}>{val}</option>
+        );
         return (
             <div className="container-fluid body col-md-12">
-                <form className="login col-md-8" onSubmit={this.handleSubmit}>
+                <form className="signUp-form col-md-8" onSubmit={this.handleSubmit}>
+                    <label className="text-primary signUp-title">Change Your Details</label>
                     <div className="form-group ">
-                        <div >First Name :</div>
+                        <div className="signUp-text">First Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -137,7 +156,7 @@ class EditProfile extends Component {
                         <label className="text-danger">{this.state.firstnameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >Last Name :</div>
+                        <div className="signUp-text">Last Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -152,7 +171,7 @@ class EditProfile extends Component {
                         <label className="text-danger">{this.state.lastnameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >User Name :</div>
+                        <div className="signUp-text">User Name :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -167,7 +186,7 @@ class EditProfile extends Component {
                         <label className="text-danger">{this.state.usernameError}</label>
                     </div>
                     <div className="form-group ">
-                        <div >Email :</div>
+                        <div className="signUp-text">Email :</div>
                         <input
                             className="form-control"
                             onChange={this.handleChange}
@@ -181,7 +200,38 @@ class EditProfile extends Component {
                         />
                         <label className="text-danger">{this.state.emailError}</label>
                     </div>
-                    <button type="submit" className="btn " name="login-button">Save Changes</button>
+                    <div className="form-group">
+                        <div className="signUp-text">Country :</div>
+                        <select
+                            className="form-control"
+                            onChange={this.handleChange}
+                            // placeholder="country"
+                            id="country"
+                            name="country"
+                            value={this.state.country}
+                        >
+                            <option value="" disabled>Choose your Country</option>
+                            {options}
+
+                        </select>
+                        <label className="text-danger">{this.state.countryError}</label>
+                    </div>
+                    <div className="form-group">
+                        <div className="signUp-text">Description :</div>
+                        <textarea
+                            className="form-control"
+                            onChange={this.handleChange}
+                            rows="4"
+                            type="text"
+                            placeholder="description"
+                            id="description"
+                            name="description"
+                            value={this.state.description}
+                            // errorText={this.state.passwordError}
+                            // floatingLabelFixed
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-success" name="login-button">Save Changes</button>
                 </form>
                 <div>
                     <div className="col-md-8">
