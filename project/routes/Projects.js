@@ -79,19 +79,20 @@ router.put('/editProject', (req, res) => {
     console.log(req.param('id'));
     const id = req.param('id');
     ProjectController.editProject(id, req.body).then(data => {
-        res.status(data.status).send({message: data.message});
+        res.status(data.status).send({success:true ,message: data.message});
     }).catch(err => {
-        res.status(err.status).send({message: err.message});
+        res.status(err.status).send({success:false ,message: err.message});
     })
 });
 
 router.delete('/deleteProject', (req, res) => {
-    console.log(req.param('id'));
+    // console.log(req.param('id'));
     const id = req.param('id');
+    console.log(id);
     ProjectController.deleteProject(id).then(data => {
-        res.status(data.status).send({message: data.message});
+        res.status(data.status).send({success:true ,message: data.message});
     }).catch(err => {
-        res.status(err.status).send({message: err.message});
+        res.status(err.status).send({success:false ,message: err.message});
     })
 });
 

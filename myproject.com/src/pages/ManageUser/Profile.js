@@ -17,10 +17,24 @@ class Profile extends Component {
         };
     };
     componentDidMount(){
+        if (this.props.match.params.id) {
+            const id = this.props.match.params.id;
+            this.getUser(id);
+            this.getUsersProjects(id);
+        }
+        else {
+            if (localStorage.getItem('id')) {
+                const userid = localStorage.getItem('id');
+                this.getUser(userid);
+                this.getUsersProjects(userid);
+            }
+            else {
+                return (window.location="/login");
+            }
+        }
+
         // console.log(this.props.match.params.id);
-        const userid = localStorage.getItem('id');
-        this.getUser(userid);
-        this.getUsersProjects(userid);
+
     }
     getUser = (id) => {
         fetch("http://localhost:3001/user/findUser?u="+id, {

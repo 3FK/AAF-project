@@ -10,6 +10,10 @@ var ProjectSchema = new Schema({
         type: String,
         required:   true
     },
+    DueDate:{
+      type: String,
+      required: true
+    },
     projectOwner:{
         // Schema.Types.ObjectId
         type: String,

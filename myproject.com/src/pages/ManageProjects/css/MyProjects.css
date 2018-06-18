@@ -1,16 +1,16 @@
-.createProject-from{
+.myProject-from{
     /*background-color: #535c68;*/
     background-color:#2f3640;
     background-size:cover;
     /*height: 600px;*/
-    padding: 30px 50px 100px 50px;
+    padding: 20px 50px 20px 50px;
     position: relative;
     border-radius: 10px;
     margin-top: 25px;
-    margin-left: 144px;
+    margin-left: 100px;
     margin-bottom: 50px;
 }
-.createProject-title{
+.myProject-main-title{
     color: #0fbcf9;
     font-family: 'Lato';
     font-weight: 600;
@@ -18,37 +18,33 @@
     line-height: 62px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    margin-left: 450px;
+    /*margin-left: 650px;*/
     margin-bottom: 25px;
 }
-.createProject-text{
+.myProject-title{
+    color: #0fbcf9;
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 62px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: center;
+    /*margin-left: 450px;*/
+    /*margin-bottom: 25px;*/
+}
+.myProject-text{
     color: #0fbcf9;
     font-family: 'Lato';
     font-weight: 200;
     font-size: 20px;
-    line-height: 62px;
+    line-height: 20px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin-top: 20px;
 }
-.createProject-btn{
-    margin-top: 10px;
-}
-.createProject-btn-custom{
-    /*float: right;*/
-    margin-top: 110px;
-    position: absolute;
-    right:40px;
-}
-.createProject-checkbox{
-    height: 18px;
-    width: 20px;
-}
-.settings-item{
-    padding-bottom: 13px;
-}
-.settings-item input{
+.myProject-btn{
+    margin-top: 40px;
+    margin-bottom: 20px;
 
-    height: 35px;
-    width: 100%;
-    font-size: 18px;
 }

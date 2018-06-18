@@ -127,7 +127,7 @@ var UserContoller = function (){
                 country:data.country,
                 description:data.description
             });
-            User.update({_id: id}, user).then((data) => {
+            User.update({_id: id}, user).then(() => {
                 resolve({status: 200, message: "User Successfully updated"});
             }).catch(err => {
                 reject({status: 500, message: "Error:- " + err});

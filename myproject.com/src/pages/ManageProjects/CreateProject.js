@@ -10,6 +10,8 @@ class CreateProject extends Component {
             projectNameError:'',
             projectDescription: '',
             projectDescriptionError:'',
+            DueDate:'',
+            DueDateError:'',
             projectOwner:'',
             Private:false,
             Collaborators:[],
@@ -57,6 +59,7 @@ class CreateProject extends Component {
             body: JSON.stringify({
                 projectName: this.state.projectName,
                 projectDescription: this.state.projectDescription,
+                DueDate:this.state.DueDate,
                 projectOwner: this.state.projectOwner,
                 Private: this.state.Private,
                 Collaborators: this.state.Collaborators,
@@ -218,6 +221,7 @@ class CreateProject extends Component {
         return (
             <div className="container-fluid body ">
                 <form className="createProject-from col-md-10" onSubmit={this.handleSubmit}>
+                    <div className="createProject-title">Start new Project!</div>
                     <div className="form-group row login">
                         <div className="createProject-text">Project Name :</div>
                         <input
@@ -244,6 +248,10 @@ class CreateProject extends Component {
                         />
                         <label className="text-danger">{this.state.projectDescriptionError}</label>
                     </div>
+                    <div className="settings-item">
+                        <div className="createProject-text">Due Date :</div>
+                        <input className="form-control" type="date" id="DueDate" name="DueDate" onChange={this.handleChange}/>
+                    </div>
                     <div className="row">
                         <div className="createProject-text">Collaborators :</div>
                         <div className="input-group mb-3">
@@ -267,16 +275,6 @@ class CreateProject extends Component {
                                     </button>
                                 </div>
                         </div>
-                        {/*<input*/}
-                            {/*className="form-control "*/}
-                            {/*type="text"*/}
-                            {/*placeholder="Collaborators"*/}
-                            {/*id="searchUser"*/}
-                            {/*name="searchUser"*/}
-                            {/*value={this.state.searchUser}*/}
-                            {/*onChange={this.handleChange}*/}
-                        {/*/>*/}
-                        {/*<button type="button" className="btn btn-info createProject-btn createProject-btn-custom" onClick={this.getUser} name="searchUser">Search User</button>*/}
                     </div>
                     <div>
                         {this.getCollaborators()}

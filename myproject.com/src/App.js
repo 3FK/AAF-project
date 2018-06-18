@@ -12,6 +12,8 @@ import CreateProject from "./pages/ManageProjects/CreateProject";
 import PublicProjects from "./pages/ManageProjects/PublicProjects";
 import Error from './pages/Error';
 import ProjectPage from "./pages/ManageProjects/ProjectPage";
+import MyProjects from "./pages/ManageProjects/MyProjects";
+import EditProjects from "./pages/ManageProjects/EditProject";
 
 class App extends Component {
 
@@ -24,11 +26,14 @@ class App extends Component {
                     <Route exact path='/' component={Home}/>
                     <Route exact path='/login' component={Login}/>
                     <Route exact path='/profile' component={Profile}/>
+                    <Route exact path='/profile/:id' component={Profile}/>
                     <Route exact path='/EditProfile/:id' component={EditProfile}/>
                     <Route exact path='/signup' component={Signup}/>
                     <Route exact path='/createProject' component={CreateProject}/>
                     <Route exact path='/publicProjects' component={PublicProjects}/>
                     <Route exact path='/projectPage/:id' component={ProjectPage}/>
+                    <Route exact path='/editProject/:id' component={EditProjects}/>
+                    <Route exact path='/myProjects' component={MyProjects}/>
                     <Route component={Error}/>
                 </Switch>
             </div>

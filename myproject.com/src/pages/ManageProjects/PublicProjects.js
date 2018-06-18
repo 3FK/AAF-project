@@ -58,7 +58,7 @@ class PublicProjects extends Component {
                                                     type="button"
                                                     className="btn "
                                                     to={"/profile/"+(gg._id)}
-                                                    name="remove"
+                                                    name="view"
                                                 >
                                                     View User
                                                 </Link>
@@ -91,7 +91,7 @@ class PublicProjects extends Component {
                             type="button"
                             className="btn "
                             to={"/projectPage/"+(item._id)}
-                            name="remove"
+                            name="View"
                         >
                             View Project
                         </Link>

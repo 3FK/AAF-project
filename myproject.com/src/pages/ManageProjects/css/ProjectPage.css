@@ -1,0 +1,77 @@
+.projectPage-from{
+    background-color:#2f3640;
+    background-size:cover;
+    /*height: 500px;*/
+    padding: 50px 50px 100px 50px;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-left: 144px;
+    margin-bottom: 50px;
+}
+.projectPage-Users{
+    background-color: #05c46b;
+    background-size:cover;
+    padding: 5px 5px 5px 5px;
+    position: relative;
+    border-radius: 10px;
+    margin-left: 150px;
+}
+.projectPage-Users-space{
+    background-color: #2f3640;
+    background-size:cover;
+    padding: 5px ;
+    position: relative;
+    border-radius: 10px;
+    float: right;
+    margin-left: 20px;
+}
+.projectPage-main-title{
+    color: #0fbcf9;
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 62px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*margin-left: 650px;*/
+    margin-bottom: 25px;
+}
+.projectPage-title{
+    color: #1e272e;
+    font-family: 'Lato';
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 62px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: center;
+    /*margin-left: 450px;*/
+    /*margin-bottom: 25px;*/
+}
+.projectPage-text{
+    color: #0fbcf9;
+    font-family: 'Lato';
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-top: 20px;
+}
+.projectPage-btn{
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.projectPage-DueDate{
+    float: right;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+.projectPage-manage{
+    position: relative;
+    float: right;
+}
+.projectPage-desc{
+
+}

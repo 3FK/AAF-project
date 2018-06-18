@@ -8,6 +8,7 @@ var ProjectContoller = function (){
             var project = new Project({
                 projectName: data.projectName ,
                 projectDescription: data.projectDescription,
+                DueDate:data.DueDate,
                 projectOwner: data.projectOwner,
                 Private:data.Private,
                 Collaborators: data.Collaborators,
@@ -46,13 +47,13 @@ var ProjectContoller = function (){
     };
     this.individualProjects = (Pid) => {
         return new Promise((resolve, reject) => {
-            Project.find({ _id: Pid})
+            Project.findOne({ _id: Pid})
                 .then(function (project) {
                     if (!project) {
                         reject({status: 500, "success":false , errors:"Project not found"});
                     }
                     else {
-                        if (project.length>0){
+                        if (project){
                             resolve({status:200,  "success":true , message: "Project found", name:project});
                         }
                         reject({status: 500, "success":false , errors:"Project not found"});
@@ -65,7 +66,7 @@ var ProjectContoller = function (){
         })
     };
 
-    this.editProject = (id, data) => {
+    this.editProject = ( id,data) => {
         return new Promise((resolve, reject) => {
             Project.update({_id: id}, data).then((data) => {
                 resolve({status: 200, message: "Project Successfully updated", data:data});
@@ -106,9 +107,9 @@ var ProjectContoller = function (){
     };
     this.getAllUserProjects = (Uid) => {
         return new Promise((resolve, reject) => {
-            Project.find(
-                { projectOwner: Uid},
-                {Collaborators:{$elemMatch:{_id:Uid}}}
+            Project.find({$or :
+                [{ projectOwner: Uid},
+                {Collaborators:{$elemMatch:{_id:Uid}}}]}
                 )
                 .then(function (project) {
                     if (!project) {
