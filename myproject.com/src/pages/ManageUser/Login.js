@@ -52,7 +52,7 @@ class Login extends Component {
                    // sessionStorage.setItem('isLogin',true);
                     console.log(jwt.decode(token));
                     console.log(tok);
-                    return (window.location="/");
+                    return (window.location="/myProjects");
                 }
                 else {
                     if (res.errors.email) {

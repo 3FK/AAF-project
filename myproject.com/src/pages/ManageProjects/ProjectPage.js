@@ -25,9 +25,6 @@ class ProjectPage extends Component {
                 user:true
             })
         }
-        else {
-            this.desc();
-        }
         console.log(this.props.match.params.id);
     }
     manage = () => {
@@ -180,7 +177,7 @@ class ProjectPage extends Component {
                                 </div>
                             </div>
                             <div>
-                                <div className="projectPage-title">Project Description :</div>
+                                <div className="projectPage-title projectPage-text">Project Description :</div>
                                 <div className="projectPage-text projectPage-desc col-md-5">
                                     {this.desc()}
                                 </div>

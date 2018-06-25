@@ -45,6 +45,7 @@ var ProjectContoller = function (){
                })
         })
     };
+    // this method return details of one project
     this.individualProjects = (Pid) => {
         return new Promise((resolve, reject) => {
             Project.findOne({ _id: Pid})
@@ -85,6 +86,7 @@ var ProjectContoller = function (){
             })
         })
     };
+    // get projects that current user created
     this.getUsersProjects = (Uid) => {
         return new Promise((resolve, reject) => {
             Project.find({ projectOwner: Uid})
@@ -105,6 +107,7 @@ var ProjectContoller = function (){
                 })
         })
     };
+    // get projects that current user created and working projects that created by other users
     this.getAllUserProjects = (Uid) => {
         return new Promise((resolve, reject) => {
             Project.find({$or :

@@ -36,11 +36,9 @@ var UserContoller = function (){
             })
                 .then(function (user) {
                     if (!user) {
-                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
                         reject({status: 500, "success":false , errors:"User not found"});
                     }
                     if (!user.comparePassword(data.password, user.password)) {
-                        // return res.send({error: true, message: "Wrong password!"});, message: "error in saving"+error
                         reject({status: 500, "success":false , errors:"Invalid Password "});
                     }
                     const token = jwt.sign({
@@ -57,12 +55,10 @@ var UserContoller = function (){
             User.find()
                 .then(function (user) {
                     if (!user) {
-                        // return res.send({error: true, message: "User does not exist!"});, message: "error in saving"+error
                         reject({status: 500, "success":false , errors:"User not found"});
                     }
                     resolve({status:200,  "success":true , message: "User found", name:user});
                     console.log(user);
-                    // return res.send({message: "You are signed in"});
                 })
         })
     };
@@ -82,7 +78,7 @@ var UserContoller = function (){
                 })
         })
     };
-
+    // search users by email or user name
     this.getUser = (data) => {
         console.log(data);
         return new Promise((resolve, reject) => {
@@ -97,24 +93,6 @@ var UserContoller = function (){
                 })
         })
     };
-
-    // this.editUser = (id, data) => {
-    //     return new Promise((resolve, reject) => {
-    //         var user = new User({
-    //             firstname: data.firstname ,
-    //             lastname: data.lastname,
-    //             username: data.username,
-    //             email: data.email.toLowerCase(),
-    //             password: data.password
-    //         });
-    //         user.password = user.hashPassword(user.password);
-    //         User.update({_id: id}, user).then((data) => {
-    //             resolve({status: 200, message: "User Successfully updated"});
-    //         }).catch(err => {
-    //             reject({status: 500, message: "Error:- " + err});
-    //         })
-    //     })
-    // };
 
     this.editUser = (id, data) => {
         return new Promise((resolve, reject) => {
